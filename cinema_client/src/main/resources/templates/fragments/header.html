@@ -5,11 +5,16 @@
                             src="https://i0.wp.com/thegamehaus.com/wp-content/uploads/2020/05/Volibear_Emote.png?resize=256%2C256&amp;ssl=1"
                             alt="logo"><span class="text-logo">AP Movie</span></a></div>
                 <div class="header__mobile">
-                    <div class="header__login" style="display: flex;">
-                        <div class="login__link" aria-haspopup="true" style="cursor: pointer;"><img
+                    <div class="header__login" style="display: flex;" th:if="${session.jwtResponse != null}">
+                        <a class="login__link" aria-haspopup="true" style="cursor: pointer;"><img
                                 src="https://i.ibb.co/PCjW83Y/avt.png" alt="user"><span
-                                class="login__text">nguyen456</span></div>
+                                class="login__text">nguyen456</span></a>
                         <a style="background: #ffc107;" class="btn" th:href="@{/sign-out}">Đăng Xuất</a>
+                    </div>
+                    <div class="header__login" style="display: flex;" th:if="${session.jwtResponse == null}">
+                        <a class="login__link" aria-haspopup="true" style="cursor: pointer;" th:href="@{/login}"><img
+                                src="https://i.ibb.co/PCjW83Y/avt.png" alt="user"><span
+                                class="login__text">Đăng Nhập</span></a>
                     </div>
                 </div><button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -32,12 +37,16 @@
                                 </div>
                             </a></li>
                     </ul>
-                    <div class="header__login" >
-                        <div class="login__link" aria-haspopup="true" style="cursor: pointer;display: flex;">
-                        <div>
-                        <img src="https://i.ibb.co/PCjW83Y/avt.png" alt="user"><span
-                                class="login__text">nguyen456</span></div>
+                    <div class="header__login" style="display: flex;" th:if="${session.jwtResponse != null}">
+                        <a class="login__link" aria-haspopup="true" style="cursor: pointer;"><img
+                                src="https://i.ibb.co/PCjW83Y/avt.png" alt="user"><span
+                                class="login__text">nguyen456</span></a>
                         <a style="background: #ffc107;" class="btn" th:href="@{/sign-out}">Đăng Xuất</a>
+                    </div>
+                    <div class="header__login" style="display: flex;" th:if="${session.jwtResponse == null}">
+                        <a class="login__link" aria-haspopup="true" style="cursor: pointer;" th:href="@{/login}"><img
+                                src="https://i.ibb.co/PCjW83Y/avt.png" alt="user"><span
+                                class="login__text">Đăng Nhập</span></a>
                     </div>
                     
                 </div>
