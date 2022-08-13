@@ -32,17 +32,28 @@
 	                        src="https://i0.wp.com/thegamehaus.com/wp-content/uploads/2020/05/Volibear_Emote.png?resize=256%2C256&amp;ssl=1"
 	                        alt="logo"><span class="text-logo">AP Movie</span></a></div>
 	            <div class="formSocial">
-	                <form class="formRegister">
-	                    <div class="form-group"><input class="input" name="taiKhoan" placeholder="Tên tài khoản"><span
-	                            class="text-danger"></span></div>
-	                    <div class="form-group"><input class="input" name="matKhau" type="password"
-	                            placeholder="Mật khẩu"><span class="text-danger"></span></div>
-	                    <div class="form-group"><input class="input" name="hoTen" type="text" placeholder="Họ tên"><span
-	                            class="text-danger"></span></div>
-	                    <div class="form-group"><input class="input" name="email" placeholder="Email"><span
-	                            class="text-danger"></span></div>
-	                    <div class="form-group"><input class="input" name="soDT" type="text"
-	                            placeholder="Số điện thoại"><span class="text-danger"></span></div>
+	                <form class="formRegister" th:object="${user}" th:action="@{/register}" method="post">
+	                    <div class="form-group">
+	                    	<input class="input" name="email" placeholder="Email" th:field="*{username}" th:value="${un}">
+	                    	<span class="text-danger"></span>
+	                    	<div class="alert alert-warning" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+	                    </div>
+	                    <div class="form-group">
+	                    	<input class="input" name="matKhau" type="password" placeholder="Mật khẩu" th:field="*{password}" th:value="${pw}">
+	                        <span class="text-danger"></span>
+	                        <div class="alert alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+	                     </div>
+	                    <div class="form-group">
+	                    	<input class="input" name="hoTen" type="text" placeholder="Họ tên" th:field="*{fullName}">
+	                    	<span class="text-danger"></span>
+	                    	<div class="alert alert-warning" th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></div>
+	                    </div>
+
+	                    <div class="form-group">
+	                    	<input class="input" name="soDT" type="tel" pattern="[0-9]{9,11}" placeholder="Số điện thoại" th:field="*{phone}" required>
+	                    	<span class="text-danger"></span>
+	                    	<div class="alert alert-warning" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
+	                    </div>
 	                    <div class="form-group"><button class="btnLogin" type="submit">Đăng ký</button></div>
 	                    <div class="form-group"><a class="text-light" href="/login">Bạn đã có tài khoản?</a></div>
 	                </form>

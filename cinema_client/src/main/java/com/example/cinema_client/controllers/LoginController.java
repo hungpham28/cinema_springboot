@@ -32,12 +32,14 @@ public class LoginController {
     public static String API_REGISTER = Api.baseURL+"/register";
     
     @GetMapping("/login")
-    public String loginPage(HttpServletRequest request) {
+    public String loginPage(HttpServletRequest request,Model model) {
+    	model.addAttribute("user",new User());
         request.getSession().removeAttribute("jwtResponse");
         return "login";
     }
     @GetMapping("/register")
-    public String registerPage(HttpServletRequest request) {
+    public String registerPage(HttpServletRequest request,Model model) {
+    	model.addAttribute("user",new User());
         request.getSession().removeAttribute("jwtResponse");
         return "register";
     }
@@ -58,13 +60,10 @@ public class LoginController {
         catch (HttpClientErrorException ex){
             model.addAttribute("loginError",ex.getResponseBodyAsString());
             model.addAttribute("hasLoginErrors", true);
-            ResponseEntity<MovieDTO[]> response = restTemplate.getForEntity(HomeController.apiGetShowingMovies, MovieDTO[].class);
-            MovieDTO[] movies = response.getBody();
-            model.addAttribute("movies", movies);
             model.addAttribute("user",new User());
             model.addAttribute("un",user.getUsername());
             model.addAttribute("pw",user.getPassword());
-            return "home";
+            return "login";
         }
         return "redirect:/";
 
@@ -77,7 +76,7 @@ public class LoginController {
             ResponseEntity<MovieDTO[]> response = restTemplate.getForEntity(HomeController.apiGetShowingMovies, MovieDTO[].class);
             MovieDTO[] movies = response.getBody();
             model.addAttribute("movies", movies);
-            return "home";
+            return "register";
         } else {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -102,7 +101,7 @@ public class LoginController {
                 model.addAttribute("fn",user.getFullName());
                 model.addAttribute("un",user.getUsername());
                 model.addAttribute("pw",user.getPassword());
-                return "home";
+                return "register";
             }
             return "redirect:/";
         }

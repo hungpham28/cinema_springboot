@@ -19,6 +19,9 @@ public class User {
 
     @NotBlank(message = "Không được để trống họ tên!")
     private String fullName;
-
+    @Size(min = 9, max = 11, message = "Số điện thoại không phù hợp")
+    @NotBlank(message = "Không được để trống họ tên!")
+    private String phone;
+    
     private Set<Role> roles;
 }
