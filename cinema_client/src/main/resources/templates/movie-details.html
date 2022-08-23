@@ -80,36 +80,13 @@
                     <li class="nav-item"><a class="nav-link" id="pills-contact-tab" data-toggle="pill"
                             href="#pills-comment" role="tab" aria-controls="pills-comment" aria-selected="true">Đánh
                             Giá</a></li>
-                    <li class="nav-item nav-video" data-src="https://www.youtube.com/embed/tgbNymZ7vqY">
+                    <li class="nav-item nav-video" th:data-src="*{trailerURL}">
                     <a class="nav-link" id="pills-trailer-tab" data-toggle="pill" href="#pills-trailer" role="tab" aria-controls="pills-trailer" aria-selected="true">
                     Trailer</a></li>
                 </ul>
                 <div id="movieTheater" class="tab-content">
                     <div class="tab-pane fade" id="pills-schedule" role="tabpanel" aria-labelledby="pills-schedule-tab">
                         <div class="movieTheater__row row bg-light">
-                            <div class="row__left col-md-4 col-sm-12">
-                                <div class="nav flex-column nav-pills" id="v-pills-rap" role="tablist"
-                                    aria-orientation="vertical"><a class="nav-link active" id="v-pills-cgv-tab"
-                                        data-toggle="pill" href="#BHDStar" role="tab" aria-controls="v-pills-cgv"
-                                        aria-selected="true">
-                                        <div class="img__content"><img
-                                                src="http://movie0706.cybersoft.edu.vn/hinhanh/bhd-star-cineplex.png"
-                                                alt="http://movie0706.cybersoft.edu.vn/hinhanh/bhd-star-cineplex.png">
-                                            <div class="img__text">
-                                                <div class="img__name">BHD Star Cineplex</div>
-                                            </div>
-                                        </div>
-                                    </a><a class="nav-link" id="v-pills-cgv-tab" data-toggle="pill" href="#CGV"
-                                        role="tab" aria-controls="v-pills-cgv" aria-selected="false">
-                                        <div class="img__content"><img
-                                                src="http://movie0706.cybersoft.edu.vn/hinhanh/cgv.png"
-                                                alt="http://movie0706.cybersoft.edu.vn/hinhanh/cgv.png">
-                                            <div class="img__text">
-                                                <div class="img__name">cgv</div>
-                                            </div>
-                                        </div>
-                                    </a></div>
-                            </div>
                             <div class="tab-content col-md-8 col-sm-12" id="v-pills-tabContent">
                                 <div class="tab-pane fade active show" id="BHDStar" role="tabpanel">
                                     <div class="theater__content">
@@ -145,88 +122,6 @@
                                                                             href="/booking/46108">
                                                                             <div class="time__begin mb-2">30/07/2022<p>
                                                                                     11:09 AM</p>
-                                                                            </div>
-                                                                        </a></div>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="CGV" role="tabpanel">
-                                    <div class="theater__content">
-                                        <ul class="list__theater">
-                                            <li class="list__item"><a class="theater__link" data-toggle="collapse"
-                                                    href="#cgv-ct-plaza" role="button" aria-expanded="false">
-                                                    <div class="row">
-                                                        <div class="theater__img col-2"><img
-                                                                src="https://i.ibb.co/cvb2Rk6/theater.jpg"
-                                                                alt="hinhrap"></div>
-                                                        <div class="theater__title col-10"><span
-                                                                class="theater__name cgv-color"><span
-                                                                    class="theater__subname"> CGV - CT Plaza
-                                                                </span></span></div>
-                                                    </div>
-                                                </a>
-                                                <div class="collapse" id="cgv-ct-plaza">
-                                                    <div class="collapse__content">
-                                                        <div class="film__timeshow">
-                                                            <div>
-                                                                <div class="film__version my-4">2D Digital</div>
-                                                                <ul class="d-flex flex-wrap">
-                                                                    <div class="timeshow__item"><a
-                                                                            class="timeshow__link"
-                                                                            href="/booking/45690">
-                                                                            <div class="time__begin mb-2">11/05/2022<p>
-                                                                                    04:30 PM</p>
-                                                                            </div>
-                                                                        </a></div>
-                                                                    <div class="timeshow__item"><a
-                                                                            class="timeshow__link"
-                                                                            href="/booking/45691">
-                                                                            <div class="time__begin mb-2">10/05/2022<p>
-                                                                                    04:30 PM</p>
-                                                                            </div>
-                                                                        </a></div>
-                                                                    <div class="timeshow__item"><a
-                                                                            class="timeshow__link"
-                                                                            href="/booking/45762">
-                                                                            <div class="time__begin mb-2">16/05/2022<p>
-                                                                                    09:30 PM</p>
-                                                                            </div>
-                                                                        </a></div>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li class="list__item"><a class="theater__link" data-toggle="collapse"
-                                                    href="#cgv-aeon-tan-phu" role="button" aria-expanded="false">
-                                                    <div class="row">
-                                                        <div class="theater__img col-2"><img
-                                                                src="https://i.ibb.co/cvb2Rk6/theater.jpg"
-                                                                alt="hinhrap"></div>
-                                                        <div class="theater__title col-10"><span
-                                                                class="theater__name cgv-color"><span
-                                                                    class="theater__subname"> CGV - Aeon Tân Phú
-                                                                </span></span></div>
-                                                    </div>
-                                                </a>
-                                                <div class="collapse" id="cgv-aeon-tan-phu">
-                                                    <div class="collapse__content">
-                                                        <div class="film__timeshow">
-                                                            <div>
-                                                                <div class="film__version my-4">2D Digital</div>
-                                                                <ul class="d-flex flex-wrap">
-                                                                    <div class="timeshow__item"><a
-                                                                            class="timeshow__link"
-                                                                            href="/booking/46083">
-                                                                            <div class="time__begin mb-2">12/01/2012<p>
-                                                                                    03:00 AM</p>
                                                                             </div>
                                                                         </a></div>
                                                                 </ul>
@@ -318,7 +213,7 @@
 								style=
 								"min-height: 500px;
 					    		width: 100%;" 
-					    		src="https://www.youtube.com/embed/tgbNymZ7vqY">
+					    		th:src="*{trailerURL}">
 									</iframe>
 
                     </div>

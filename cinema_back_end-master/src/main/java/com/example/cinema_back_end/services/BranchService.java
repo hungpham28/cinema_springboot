@@ -1,6 +1,8 @@
 package com.example.cinema_back_end.services;
 
 import com.example.cinema_back_end.dtos.BranchDTO;
+import com.example.cinema_back_end.dtos.ScheduleDTO;
+import com.example.cinema_back_end.entities.Branch;
 import com.example.cinema_back_end.repositories.IBranchRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,4 +26,27 @@ public class BranchService implements IBranchService{
                 .stream().map(branch -> modelMapper.map(branch,BranchDTO.class))
                 .collect(Collectors.toList());
     }
+
+	@Override
+	public BranchDTO getBranchAndSchedules(Integer branchId) {
+		Branch branch= branchRepository.findByIdAndFetchSchedulesEagerly(branchId);
+		BranchDTO branchDTO=modelMapper.map(branch, BranchDTO.class);
+        branchDTO.setSchedules(branch.getScheduleList()
+                .stream().map(schedule -> modelMapper.map(schedule,ScheduleDTO.class))
+                .collect(Collectors.toList()));
+        return branchDTO;
+	}
+
+	@Override
+	public List<BranchDTO> getBranchesAndSchedules() {
+		return branchRepository.getBranchesAndFetchSchedulesEagerly()
+				.stream().map(branch -> {
+						BranchDTO b=modelMapper.map(branch, BranchDTO.class);
+						b.setSchedules(branch.getScheduleList().stream()
+								.map(schedule -> modelMapper.map(schedule,ScheduleDTO.class))
+								.collect(Collectors.toList()));
+						return b;
+					})
+				.collect(Collectors.toList());
+	}
 }

@@ -3,6 +3,7 @@ package com.example.cinema_client.models;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 public class MovieDTO {
@@ -20,4 +21,5 @@ public class MovieDTO {
     private String trailerURL;
     private String language;
     private String rated;
+    private List<ScheduleDTO> schedules;
 }

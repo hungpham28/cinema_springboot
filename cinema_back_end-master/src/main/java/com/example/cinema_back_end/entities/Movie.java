@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Data
@@ -34,4 +35,6 @@ public class Movie {
     private String language;
     private String rated;
     private int isShowing;
+    @OneToMany(mappedBy = "movie",fetch = FetchType.LAZY)
+    private List<Schedule> scheduleList;
 }

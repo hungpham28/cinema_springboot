@@ -1,6 +1,7 @@
 package com.example.cinema_back_end.services;
 
 import com.example.cinema_back_end.dtos.MovieDTO;
+import com.example.cinema_back_end.dtos.ScheduleDTO;
 import com.example.cinema_back_end.entities.Movie;
 import com.example.cinema_back_end.repositories.IMovieRepository;
 import org.modelmapper.ModelMapper;
@@ -43,4 +44,13 @@ public class MovieService implements IMovieService{
                 .stream().map(movie -> modelMapper.map(movie,MovieDTO.class))
                 .collect(Collectors.toList());
     }
+	@Override
+	public MovieDTO getMovieAndSchedules(Integer id) {
+		Movie movie= movieRepository.findByIdAndFetchSchedulesEagerly(id);
+		MovieDTO movieDTO=modelMapper.map(movie, MovieDTO.class);
+        movieDTO.setSchedules(movie.getScheduleList()
+                .stream().map(schedule -> modelMapper.map(schedule,ScheduleDTO.class))
+                .collect(Collectors.toList()));
+        return movieDTO;
+	}
 }

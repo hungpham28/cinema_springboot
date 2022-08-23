@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface IBranchService {
     List<BranchDTO> getBranchesThatShowTheMovie(Integer movieId);
+    BranchDTO getBranchAndSchedules(Integer branchId);
+    List<BranchDTO> getBranchesAndSchedules();
 }

@@ -3,6 +3,8 @@ package com.example.cinema_back_end.entities;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Data
@@ -18,4 +20,6 @@ public class Branch {
     private String name;
     private String diaChi;
     private String phoneNo;
+    @OneToMany(mappedBy = "branch",fetch = FetchType.LAZY)
+    private List<Schedule> scheduleList;
 }

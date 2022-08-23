@@ -92,9 +92,9 @@ public class CinemaBackEndApplication {
 //            seat.setRoom(room);
 //            seatRepository.save(seat);
 //        }
-
+//
 //        List<User> users = userService.findAll();
-
+//
 //        if (users.isEmpty()) {
 //            User admin = new User();
 //            Set<Role> roles = new HashSet<>();

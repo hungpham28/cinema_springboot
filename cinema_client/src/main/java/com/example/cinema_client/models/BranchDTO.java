@@ -1,5 +1,7 @@
 package com.example.cinema_client.models;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -9,4 +11,5 @@ public class BranchDTO {
     private String name;
     private String diaChi;
     private String phoneNo;
+    private List<ScheduleDTO> schedules;
 }
