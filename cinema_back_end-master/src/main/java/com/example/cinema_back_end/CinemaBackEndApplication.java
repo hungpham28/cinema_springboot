@@ -107,7 +107,7 @@ public class CinemaBackEndApplication {
 //            admin.setRoles(roles);
 //            userService.save(admin);
 //         }
-//
+
 //        List<Movie> movies = movieRepository.findAll();
 //        if (movies.isEmpty()) {
 //            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");

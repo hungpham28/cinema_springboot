@@ -169,10 +169,8 @@ public class AccountController {
         ,listRequestParam);
 
         User userInf = responseUser.getBody();
-        System.out.println(userInf);
         model.addAttribute("listTickets",listTickets);
-        model.addAttribute("userInf",userInf);
-        model.addAttribute("user",new User());
+        model.addAttribute("user",userInf);
     	
     	return "profile";
     }

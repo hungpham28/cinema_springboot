@@ -22,9 +22,15 @@ public class BranchService implements IBranchService{
 
     @Override
     public List<BranchDTO> getBranchesThatShowTheMovie(Integer movieId) {
-        return branchRepository.getBranchThatShowTheMovie(movieId)
-                .stream().map(branch -> modelMapper.map(branch,BranchDTO.class))
-                .collect(Collectors.toList());
+		return branchRepository.getBranchThatShowTheMovie(movieId)
+				.stream().map(branch -> {
+						BranchDTO b=modelMapper.map(branch, BranchDTO.class);
+						b.setSchedules(branch.getScheduleList().stream()
+								.map(schedule -> modelMapper.map(schedule,ScheduleDTO.class))
+								.collect(Collectors.toList()));
+						return b;
+					})
+				.collect(Collectors.toList());
     }
 
 	@Override
