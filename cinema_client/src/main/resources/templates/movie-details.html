@@ -44,7 +44,7 @@
                     </div>
                     <div class="movie__info col-6">
                         <div>
-                            <div class="showtime">11-05-2022</div>
+                            
                             <div class="mb-3 d-flex justify-content-start align-items-center"><span
                                     class="age--C">GP09</span><span class="name" th:text="*{name}"></span></div>
                             <p class="during" th:text="*{duration}+' phút'"></p><a href="#movieTheater"><button class="bookTicket-btn">Mua
@@ -87,43 +87,41 @@
                 <div id="movieTheater" class="tab-content">
                     <div class="tab-pane fade" id="pills-schedule" role="tabpanel" aria-labelledby="pills-schedule-tab">
                         <div class="movieTheater__row row bg-light">
-                            <div class="tab-content col-md-8 col-sm-12" id="v-pills-tabContent">
+                            <div class="tab-content col-md-8 col-sm-12" id="v-pills-tabContent" style="max-width: 100%;flex: 0 0 100%;">
                                 <div class="tab-pane fade active show" id="BHDStar" role="tabpanel">
                                     <div class="theater__content">
                                         <ul class="list__theater">
-                                            <li class="list__item"><a class="theater__link collapsed"
-                                                    data-toggle="collapse" href="#bhd-star-cineplex-3-2" role="button"
+                                            <li class="list__item" th:each="branch: ${branches}" th:object="${branch}">
+                                            	<a class="theater__link collapsed"
+                                                    data-toggle="collapse" th:href="'#branch'+*{id}" role="button"
                                                     aria-expanded="false">
                                                     <div class="row">
                                                         <div class="theater__img col-2"><img
                                                                 src="https://i.ibb.co/cvb2Rk6/theater.jpg"
                                                                 alt="hinhrap"></div>
-                                                        <div class="theater__title col-10"><span
-                                                                class="theater__name cgv-color"><span
-                                                                    class="theater__subname"> BHD Star Cineplex - 3/2
-                                                                </span></span></div>
+                                                        <div class="theater__title col-10">
+                                                        	<span class="theater__name cgv-color">
+                                                                <span class="theater__subname" th:text="*{name}"></span>
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </a>
-                                                <div class="collapse" id="bhd-star-cineplex-3-2" style="">
+                                                <div class="collapse" th:id="'branch'+*{id}" style="">
                                                     <div class="collapse__content">
                                                         <div class="film__timeshow">
                                                             <div>
-                                                                <div class="film__version my-4">2D Digital</div>
+                                                                <div class="film__version my-4" >2D Digital</div>
                                                                 <ul class="d-flex flex-wrap">
-                                                                    <div class="timeshow__item"><a
+                                                                	<th:block th:each="schedule: *{schedules}"> 
+                                                                    <div class="timeshow__item"  th:if="${schedule.movie.id==movie.id}"><a
                                                                             class="timeshow__link"
-                                                                            href="/booking/45797">
-                                                                            <div class="time__begin mb-2">25/05/2022<p>
-                                                                                    02:51 PM</p>
+                                                                            th:href="@{'/booking/' + ${schedule.id}}">
+                                                                            <div class="time__begin mb-2" th:inline="text">
+                                                                            	[[${schedule.startDate}]]
+																				<p th:text="${schedule.startTime}"></p>
                                                                             </div>
                                                                         </a></div>
-                                                                    <div class="timeshow__item"><a
-                                                                            class="timeshow__link"
-                                                                            href="/booking/46108">
-                                                                            <div class="time__begin mb-2">30/07/2022<p>
-                                                                                    11:09 AM</p>
-                                                                            </div>
-                                                                        </a></div>
+                                                                     </th:block>
                                                                 </ul>
                                                             </div>
                                                         </div>

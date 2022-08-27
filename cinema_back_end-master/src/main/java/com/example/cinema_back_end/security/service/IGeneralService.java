@@ -1,4 +1,4 @@
-package com.example.cinema_back_end.services;
+package com.example.cinema_back_end.security.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,9 +6,9 @@ import java.util.Optional;
 public interface IGeneralService<T> {
     List<T> findAll();
 
-    T getById(Integer id);
+    Optional<T> findById(Integer id);
 
-    void update(T t);
+    T save(T t);
 
     void remove(Integer id);
 }

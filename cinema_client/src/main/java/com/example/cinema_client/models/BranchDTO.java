@@ -12,4 +12,5 @@ public class BranchDTO {
     private String diaChi;
     private String phoneNo;
     private List<ScheduleDTO> schedules;
+    private List<MovieDTO> movies;
 }

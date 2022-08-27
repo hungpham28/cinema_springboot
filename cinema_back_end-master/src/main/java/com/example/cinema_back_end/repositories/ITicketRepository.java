@@ -12,4 +12,8 @@ public interface ITicketRepository extends JpaRepository<Ticket, Integer> {
     List<Ticket> findTicketsBySchedule_IdAndSeat_Id(Integer scheduleId,Integer seatId);
     @Query("SELECT t FROM Ticket t WHERE t.bill.id IN (SELECT b.id FROM Bill b WHERE b.user.id=:userId) ORDER BY t.id DESC")
     List<Ticket> findTicketsByUserId(@Param("userId") Integer userId);
+    @Query("SELECT t FROM Ticket t WHERE t.bill.id IN (SELECT b.id FROM Bill b WHERE b.user.id=:userId) "
+    		+ "AND t.schedule.id=:scheduleId"
+    		+ "  ORDER BY t.id DESC")
+    List<Ticket> findTicketsByUserIdAndScheduleId(@Param("userId") Integer userId,@Param("scheduleId") Integer scheduleId);
 }

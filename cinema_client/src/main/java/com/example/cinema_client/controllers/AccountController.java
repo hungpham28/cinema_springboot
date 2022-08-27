@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.print.attribute.UnmodifiableSetException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -68,17 +67,12 @@ public class AccountController {
 
         User user = responseUser.getBody();
         model.addAttribute("listTickets",listTickets);
-        model.addAttribute("userInf",user);
-        model.addAttribute("user",new User());
+        model.addAttribute("user",user);
         return "profile";
     }
     @PostMapping("/update-infor")
-    public String updateProfilePage(@RequestParam String fullName,@RequestParam String username
-    		,@RequestParam String phone , Model model, HttpServletRequest request) {
-        User user=new User();
-        user.setFullName(fullName);
-        user.setUsername(username);
-        user.setPhone(phone);
+    public String updateProfilePage(@Valid @ModelAttribute("user") User user,BindingResult bindingResult, Model model, HttpServletRequest request) {
+    	
     	HttpSession session = request.getSession();
         // Gắn access token jwt vào header để gửi kèm request
         HttpHeaders headers = new HttpHeaders();
@@ -93,31 +87,20 @@ public class AccountController {
                 .toUriString();
         Map<String,String> listRequestParam = new HashMap<>();
         listRequestParam.put("userId", jwtResponseDTO.getId()+"");
-        System.out.println(entity);
         ResponseEntity<TicketDTO[]> responseTicket = restTemplate.exchange(urlTemplate, HttpMethod.GET,entity,TicketDTO[].class
         ,listRequestParam);
-        System.out.println(responseTicket);
         TicketDTO[] listTickets = responseTicket.getBody();
-        // Gọi api lấy ra thông tin người dùng
-        urlTemplate = UriComponentsBuilder.fromHttpUrl(API_GET_PROFILE)
-                .queryParam("userId", "{userId}")
-                .encode()
-                .toUriString();
-        
-        ResponseEntity<User> responseUser = restTemplate.exchange(urlTemplate, HttpMethod.GET,entity,User.class
-        ,listRequestParam);
-        System.out.println(responseUser);
-        User userInf = responseUser.getBody();
-        model.addAttribute("listTickets",listTickets);
-        model.addAttribute("userInf",userInf);
-        model.addAttribute("user",new User());
-    	if(true) {
+    	
         HttpEntity<User> entityUser = new HttpEntity<>(user,headers);
-        System.out.println("OK");
         // Gọi api gửi data qua API để update thông tin tài khoản
-
-        ResponseEntity<User> response = restTemplate.exchange(API_UPDATE_INFOR, HttpMethod.POST,entityUser,User.class);
-    	}
+        if(!(bindingResult.hasErrors())) {
+        	ResponseEntity<String> response = restTemplate.exchange(API_UPDATE_INFOR+"?userId="+jwtResponseDTO.getId().toString()
+        			, HttpMethod.POST,entityUser,String.class);
+        }
+        jwtResponseDTO.setName(user.getFullName());
+        session.setAttribute("jwtResponse", jwtResponseDTO);
+        model.addAttribute("listTickets",listTickets);
+        model.addAttribute("user",user);
         return "profile";
     }
     @PostMapping("/change-password")
@@ -130,7 +113,7 @@ public class AccountController {
         JwtResponseDTO jwtResponseDTO = (JwtResponseDTO)session.getAttribute("jwtResponse");
         headers.set(HttpHeaders.AUTHORIZATION,"Bearer "+jwtResponseDTO.getAccessToken());
         HttpEntity<?> entity = new HttpEntity<>(headers);
-    	if(newPassword.equals(validNewPassword)) {
+    	if(newPassword.equals(validNewPassword) && newPassword.length()>=6 ) {
 	        Map<String,String> listRequestParam = new HashMap<>();
 	        listRequestParam.put("userId", jwtResponseDTO.getId()+"");
 	        listRequestParam.put("newPassword", newPassword);
@@ -144,7 +127,13 @@ public class AccountController {
 	        
 	        ResponseEntity<String> response = restTemplate.exchange(urlTemplate, HttpMethod.POST,entity,String.class,listRequestParam);
 	        model.addAttribute("statusChangedPassword",true);
+	        model.addAttribute("messageStatus","Thay đổi mật khẩu thành công");
     	}else {
+    		if(newPassword.length()<6) {
+    			model.addAttribute("messageStatus", "Độ dài mật khẩu phải ít nhất 6 kí tự");
+    		}else {
+    			model.addAttribute("messageStatus","Mật khẩu nhập không khớp");	
+    		}
     		model.addAttribute("statusChangedPassword",false);
     	}
         // Gọi api lấy ra lịch sử mua vúa được chọn

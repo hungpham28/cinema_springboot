@@ -35,7 +35,7 @@
                         <div class="row">
                             <div class="col-md-4 col-sm-12 col-left bg-dark">
                                 <h2 class="info-title">Thông tin cá nhân</h2>
-                                <div class="MuiPaper-root MuiTableContainer-root MuiPaper-elevation1 MuiPaper-rounded" th:object="${userInf}">
+                                <div class="MuiPaper-root MuiTableContainer-root MuiPaper-elevation1 MuiPaper-rounded" th:object="${user}">
                                     <table class="MuiTable-root" aria-label="simple table" >
                                         <tbody class="MuiTableBody-root">
                                             <th class="MuiTableRow-root" role="row" scope="row">
@@ -90,18 +90,21 @@
                                             <div class="card-body">
                                                 <form class="formRegister" th:object="${user}" th:action="@{/account/update-infor}" method="post">
                                                     <div class="form-group"><input class="input" 
-                                                            type="text" placeholder="Họ tên" id="fullName" name="fullName" th:value="${userInf.fullName}"><span
+                                                            type="text" placeholder="Họ tên"  th:field="*{fullName}" th:value="*{fullName}"><span
                                                             class="text-danger"></span></div>
-                                                    <div class="form-group"><input class="input" 
-                                                            placeholder="Email" id="username" name="username" th:value="${userInf.username}"><span
+                                                    
+                                                    <div class="form-group"><input class="input" type="hidden"
+                                                            placeholder="Email" th:field="*{username}" th:value="*{username}"><span
                                                             class="text-danger"></span></div>
-                                                    <div class="form-group"><input class="input"  disabled
-                                                            type="password" placeholder="Mật khẩu" value="******"><span
+                                                    <div class="alert alert-warning" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+                                                    <div class="form-group"><input class="input" type="hidden"
+                                                            placeholder="Mật khẩu" th:field="*{password}" th:value="'******'" readonly><span
                                                             class="text-danger"></span></div>
-
-                                                    <div class="form-group"><input class="input" name="phone" id="phone" type="text"
-                                                            placeholder="Số điện thoại" th:value="${userInf.phone}"><span
+													<div class="alert alert-warning" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                                                    <div class="form-group"><input class="input" type="text"
+                                                            placeholder="Số điện thoại" th:field="*{phone}" th:value="*{phone}" ><span
                                                             class="text-danger"></span></div>
+                                                    <div class="alert alert-warning" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
                                                     <div class="form-group"><button class="btnChange btn-block"
                                                             type="submit"
                                                             style="color: white; background-color: rgb(96, 197, 239); border-radius: 5px; padding: 15px;">Thay
@@ -205,7 +208,7 @@
       <span class="swal-icon--error__line swal-icon--error__line--right"></span>
     </div>
   </div>
-  	<div class="swal-title" style="" >Mật khẩu nhập không khớp</div>
+  	<div class="swal-title" th:text="${messageStatus}"></div>
   	<div class="swal-footer">
   <div class="swal-button-container">
 
@@ -225,7 +228,7 @@
 
     <div class="swal-icon--success__ring"></div>
     <div class="swal-icon--success__hide-corners"></div>
-  </div><div class="swal-title" style="">Thay đổi mật khẩu thành công</div><div class="swal-text" style="">Xin chào nguyen456</div><div class="swal-footer"><div class="swal-button-container">
+  </div><div class="swal-title" th:text="${messageStatus}"></div><div class="swal-text" style=""></div><div class="swal-footer"><div class="swal-button-container">
 
     <button class="swal-button swal-button--confirm">OK</button>
 

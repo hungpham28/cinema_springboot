@@ -16,6 +16,8 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    private boolean isVip;
+    private boolean isActive;
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "room_id",nullable = false)

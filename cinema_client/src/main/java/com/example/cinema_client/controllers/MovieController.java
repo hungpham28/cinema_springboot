@@ -1,9 +1,12 @@
 package com.example.cinema_client.controllers;
 
 import com.example.cinema_client.constants.Api;
+import com.example.cinema_client.models.BranchDTO;
 import com.example.cinema_client.models.MovieDTO;
 import com.example.cinema_client.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +18,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import java.net.http.HttpRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +31,8 @@ public class MovieController {
 
     public static String API_GET_MOVIE_DETAILS = Api.baseURL+"/api/movies/details";
     public static String API_GET_All_MOVIES = Api.baseURL+"/api/movies/all-movies";
+    public static String API_GET_BRANCHES_BY_MOVIE = Api.baseURL+"/api/branches";
+    
     @GetMapping("/detail")
     public String displayMovieDetailPage(@RequestParam Integer movieId, Model model){
         // Truyền tham số movieId vào query string rồi gửi request
@@ -37,6 +44,15 @@ public class MovieController {
         params.put("movieId", movieId);
         ResponseEntity<MovieDTO> response = restTemplate.getForEntity(urlTemplate,MovieDTO.class,params);
         MovieDTO movie = response.getBody();
+        // Truyền tham số movieId vào query string rồi gửi request
+        urlTemplate = UriComponentsBuilder.fromHttpUrl(API_GET_BRANCHES_BY_MOVIE)
+                .queryParam("movieId", "{movieId}")
+                .encode()
+                .toUriString();
+
+        HttpEntity<BranchDTO[]> responseBranches = restTemplate.getForEntity(urlTemplate,BranchDTO[].class,params);
+        BranchDTO[] branchDTOS = responseBranches.getBody();
+        model.addAttribute("branches",branchDTOS);
         model.addAttribute("movie",movie);
         model.addAttribute("user",new User());
         return "movie-details";

@@ -1110,33 +1110,35 @@
 								            </div>
 								            <div class="secondary__tabContent col-md-7 col-sm-12">
 								                <div class="tab-content" id="v-pills-tabContent">
-								                    <div th:each="branch : ${branchesAndSchedules}" class="tab-pane fade" th:id="'branch'+${branch.key}" role="tabpanel" aria-labelledby="v-pills-home-tab">
+								                    <div th:each="branch : ${branches}" class="tab-pane fade" th:id="'branch'+${branch.id}" role="tabpanel" aria-labelledby="v-pills-home-tab">
 								                        <div class="tab__list" >
 								                            <ul>
-								                                <li class="film__item" th:each="movie: ${branch.value}">
-								                                	<a class="film__link" data-toggle="collapse" th:href="'#brand'+${branch.key}+'-movie'+${movie.key}" role="button" aria-expanded="false" aria-controls="1322">
+								                            	
+								                                <li class="film__item" th:each="movie: ${branch.movies}" >
+								                                	<a class="film__link" data-toggle="collapse" th:href="'#brand'+${branch.id}+'-movie'+${movie.id}" role="button" aria-expanded="false" aria-controls="1322">
 								                                        <div class="row">
-								                                            <div class="film__img col-2"><img th:src="${movie.value.get('movie').get(0)}" th:alt="${movie.value.get('movie').get(0)}">
+								                                            <div class="film__img col-2"><img th:src="${movie.smallImageURl}" th:alt="${movie.smallImageURl}">
 								                                            </div>
 								                                            <div class="film__title col-10">
 								                                            	<span class="age--C">2D</span>
-								                                            	<span class="film__name" th:text="${movie.value.get('movie').get(1)}"></span>
-								                                                <p class="film__timming" th:text="${movie.value.get('movie').get(2)}+'phút - ' +${movie.value.get('movie').get(3)} "></p>
+								                                            	<span class="film__name" th:text="${movie.name}"></span>
+								                                                <p class="film__timming" th:text="${movie.duration}+'phút - ' +${movie.categories} "></p>
 								                                            </div>
 								                                        </div>
 								                                    </a>
-								                                    <div class="collapse" th:id="'brand'+${branch.key}+'-movie'+${movie.key}">
+								                                    <div class="collapse" th:id="'brand'+${branch.id}+'-movie'+${movie.id}">
 								                                        <div class="collapse__content">
 								                                            <ul class="d-flex flex-wrap">
-								                                                <li  class="timeshow__item" th:each="schedule: ${movie.value.get('schedules')}">
-								                                                	<a class="timeshow__link" href="/booking/40231">
-								                                                		<span class="time__begin" th:text="${schedule}"></span>
+								                                                <li  class="timeshow__item" th:each="schedule: ${movie.schedules}">
+								                                                	<a class="timeshow__link" th:href="@{'/booking/' + ${schedule.id}}">
+								                                                		<span class="time__begin" th:text="${#temporals.format(schedule.startTime, 'HH:mm')}"></span>
 								                                                	</a>
 								                                                </li>
 								                                            </ul>
 								                                        </div>
 								                                    </div>
 								                                </li>
+								                                
 								                            </ul>
 								                        </div>
 								                    </div>

@@ -37,8 +37,9 @@ public class UserService implements IUserService {
         return userRepository.save(user);
     }
     
-    public void updateInfor(User user) {
-    	userRepository.save(user);
+    @Override
+    public void changePassword(Integer id,String newPass) {
+    	userRepository.changePassword(id, passwordEncoder.encode(newPass));
     }
     @Override
     public void remove(Integer id) {
@@ -57,5 +58,10 @@ public class UserService implements IUserService {
     @Override
     public Optional<User> findByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+
+	@Override
+    public void updateInfor(Integer userId,User user) {
+    	userRepository.updateInfo(userId, user.getFullName(), user.getPhone());;
     }
 }

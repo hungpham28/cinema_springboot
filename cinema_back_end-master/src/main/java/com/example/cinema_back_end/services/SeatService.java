@@ -25,7 +25,7 @@ public class SeatService implements ISeatService{
     private ModelMapper modelMapper;
 
     @Override
-    public List<SeatDTO> getSeatsByScheduleId(Integer scheduleId) {
+    public List<SeatDTO> getSeatsByScheduleIdAndUserId(Integer scheduleId,Integer userId) {
         // Lấy ra các chỗ ngồi của phòng trong lịch đó
         Room room = scheduleRepository.getById(scheduleId).getRoom();
         List<Seat> listSeat = seatRepository.getSeatByRoom_Id(room.getId());
@@ -34,7 +34,10 @@ public class SeatService implements ISeatService{
         List<Seat> occupiedSeats = ticketRepository.findTicketsBySchedule_Id(scheduleId)
                 .stream().map(ticket -> ticket.getSeat())
                 .collect(Collectors.toList());
-
+        // Lấy ra các vé người dùng đã đặt trong lịch đó rồi map sang các chỗ ngồi
+        List<Seat> checkedSeats= ticketRepository.findTicketsByUserIdAndScheduleId(userId,scheduleId)
+                .stream().map(ticket -> ticket.getSeat())
+                .collect(Collectors.toList());
         // Map list chỗ ngồi của phòng ở bước 1 sang list dto
         List<SeatDTO> filteredSeats = listSeat.stream().map(seat -> {
            SeatDTO seatDTO = modelMapper.map(seat,SeatDTO.class);
@@ -45,7 +48,15 @@ public class SeatService implements ISeatService{
            }
            return seatDTO;
         }).collect(Collectors.toList());
-
+        filteredSeats = filteredSeats.stream().map(seat -> {
+            SeatDTO seatDTO = modelMapper.map(seat,SeatDTO.class);
+            if(checkedSeats.stream()
+                    .map(checkedSeat->checkedSeat.getId())
+                    .collect(Collectors.toList()).contains(seat.getId())){
+                seatDTO.setChecked(true); // Nếu ghế nào nằm trong list ghế đã được người dùng đặt thì set = true
+            }
+            return seatDTO;
+         }).collect(Collectors.toList());
         return  filteredSeats;
     }
 }

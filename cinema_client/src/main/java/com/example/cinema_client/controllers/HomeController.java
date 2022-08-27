@@ -19,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -35,43 +36,34 @@ public class HomeController {
     public static String apiGetShowingMovies = Api.baseURL+"/api/movies/showing";
     public static String API_GET_BRANCHES_AND_SCHEDULES = Api.baseURL+"/api/branches/branches-schedules";
     public static String API_GET_SHOWING_MOVIES_BY_NAME = Api.baseURL+"/api/movies/showing/search";
-    @GetMapping("/test")
-    public String displaytest(Model model){
-        return "test";
-    }
+    
     @GetMapping
     public String displayHomePage(Model model){
         ResponseEntity<MovieDTO[]> responseMovies = restTemplate.getForEntity(apiGetShowingMovies,MovieDTO[].class);
         MovieDTO[] movies = responseMovies.getBody();
         ResponseEntity<BranchDTO[]> responseBranches = restTemplate.getForEntity(API_GET_BRANCHES_AND_SCHEDULES,BranchDTO[].class);
         BranchDTO[] branches = responseBranches.getBody();
-        Map<Integer, Map<Integer,Map<String, List<String>>>> branchesAndSchedules= new HashMap<>();
+        Map<Integer,MovieDTO> movieByBranch;
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
-		
+		List<ScheduleDTO> schedules;
         for(BranchDTO branch: branches) {
-        	branchesAndSchedules.put(branch.getId(),new HashMap<Integer,Map<String,List<String>>>());
-        	
-        	Map<Integer, Map<String,List<String>>> moviesAndSchedules=branchesAndSchedules.get(branch.getId());
-        	
-        	for (ScheduleDTO schedule : branch.getSchedules()) {
-        		if(moviesAndSchedules.get(schedule.getMovie().getId()) == null) {
-        			moviesAndSchedules.put(schedule.getMovie().getId(), new HashMap<String, List<String>>());
-        			moviesAndSchedules.get(schedule.getMovie().getId())
-        			.put("movie",
-        					Arrays.asList(schedule.getMovie().getSmallImageURl(),
-        					schedule.getMovie().getName(),
-        					String.valueOf(schedule.getMovie().getDuration()),
-        					schedule.getMovie().getCategories()));
+        	movieByBranch= new HashMap<Integer,MovieDTO>();
+        	schedules=branch.getSchedules();
+        	for (ScheduleDTO schedule : schedules) {
+        		
+        		if(movieByBranch.get(schedule.getMovie().getId())==null) {
         			
-        			moviesAndSchedules.get(schedule.getMovie().getId())
-        			.put("schedules",new LinkedList<String>());
+        			schedule.getMovie().setSchedules(new ArrayList<>());
+        			schedule.getMovie().getSchedules().add(schedule);
+        			movieByBranch.put(schedule.getMovie().getId(),(MovieDTO) schedule.getMovie());
+        			
+        		}else {
+        			
+        			movieByBranch.get(schedule.getMovie().getId()).getSchedules().add(schedule);
         		}
-        		moviesAndSchedules.get(schedule.getMovie().getId()).get("schedules")
-        		.add(schedule.getStartTime().format(dtf).toString());
 			}
-        	
+        	branch.setMovies(new ArrayList<MovieDTO>(movieByBranch.values()));
         }
-        model.addAttribute("branchesAndSchedules", branchesAndSchedules);
         model.addAttribute("branches",branches);
         model.addAttribute("movies",movies);
         model.addAttribute("user",new User());

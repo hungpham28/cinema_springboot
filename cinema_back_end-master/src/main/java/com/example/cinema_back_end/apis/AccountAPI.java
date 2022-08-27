@@ -33,11 +33,9 @@ public class AccountAPI {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
     @PostMapping("/update-infor")
-    private ResponseEntity<String> updateProfileUser(@RequestBody User user){
+    private ResponseEntity<String> updateProfileUser(@RequestParam Integer userId,@RequestBody User user){
         try {
-        	User oldUser=userService.findById(user.getId()).get();
-        	user.setPassword(oldUser.getPassword());
-        	userService.updateInfor(user);
+        	userService.updateInfor(userId,user);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
         }
@@ -46,9 +44,7 @@ public class AccountAPI {
     @PostMapping("/change-password")
     private ResponseEntity<String> changePasswordUser(@RequestParam Integer userId,@RequestParam String newPassword){
         try {
-        	User user=userService.findById(userId).get();
-        	user.setPassword(newPassword);
-        	userService.save(user);
+        	userService.changePassword(userId, newPassword);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
         }

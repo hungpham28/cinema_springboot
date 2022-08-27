@@ -19,6 +19,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import java.net.http.HttpRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,8 +33,9 @@ public class BranchController {
     public static String apiGetBranches = Api.baseURL+"/api/branches";
 
     @GetMapping
-    public String displayBranchesPage(@RequestParam Integer movieId, Model model, HttpServletRequest request){
+    public String displayBranchesPage( Model model, HttpServletRequest request){
         // Gắn movie id vào session lát sau dùng tiếp để tìm ra lịch xem cụ thể dựa trên movie id đó
+    	Integer movieId=Integer.parseInt(request.getParameter("movieId"));
         HttpSession session = request.getSession();
         session.setAttribute("movieId",movieId);
 

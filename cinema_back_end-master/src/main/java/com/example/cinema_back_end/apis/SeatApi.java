@@ -15,7 +15,7 @@ public class SeatApi {
     private ISeatService seatService;
 
     @GetMapping
-    public List<SeatDTO> getSeatsByScheduleId(@RequestParam Integer scheduleId){
-        return seatService.getSeatsByScheduleId(scheduleId);
+    public List<SeatDTO> getSeatsByScheduleId(@RequestParam Integer scheduleId,@RequestParam Integer userId){
+        return seatService.getSeatsByScheduleIdAndUserId(scheduleId,userId);
     }
 }

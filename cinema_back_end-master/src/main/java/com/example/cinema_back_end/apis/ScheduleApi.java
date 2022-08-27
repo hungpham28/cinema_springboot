@@ -21,10 +21,14 @@ public class ScheduleApi {
         return scheduleService.getStartTimes(movieId,branchId,LocalDate.parse(startDate));
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<ScheduleDTO> getSchedules(@RequestParam Integer movieId,  @RequestParam Integer branchId,
                                           @RequestParam String startDate,@RequestParam String startTime,
                                           @RequestParam Integer roomId){
         return scheduleService.getSchedules(movieId,branchId,startDate,startTime,roomId);
+    }
+    @GetMapping
+    public ScheduleDTO getSchedule(@RequestParam Integer scheduleId){
+        return scheduleService.getById(scheduleId);
     }
 }
