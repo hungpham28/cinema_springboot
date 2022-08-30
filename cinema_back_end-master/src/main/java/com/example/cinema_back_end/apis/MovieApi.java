@@ -25,7 +25,11 @@ public class MovieApi {
     public ResponseEntity<List<MovieDTO>> findAllShowingMovies(){
         return new ResponseEntity<>(movieService.findAllShowingMovies(), HttpStatus.OK);
     }
-    @GetMapping("/all-movies")
+    @GetMapping("/coming")
+    public ResponseEntity<List<MovieDTO>> findAllComingMovies(){
+        return new ResponseEntity<>(movieService.findAllComingMovies(), HttpStatus.OK);
+    }
+    @GetMapping
     public ResponseEntity<List<MovieDTO>> getAllMovies(){
         return new ResponseEntity<>(movieService.getAllMovies(), HttpStatus.OK);
     }
@@ -34,9 +38,9 @@ public class MovieApi {
         return movieService.getById(movieId);
     }
 
-    @GetMapping("/showing/search")
-    public List<MovieDTO> findAllShowingMoviesByName(@RequestParam String name){
-        return movieService.findAllShowingMoviesByName(name);
+    @GetMapping("/search")
+    public List<MovieDTO> findAllShowingMoviesByName(@RequestParam String name,@RequestParam(required=false) Integer status){
+        return movieService.findAllMoviesByNameAndStatus(name,status);
     }
 
     @PostMapping

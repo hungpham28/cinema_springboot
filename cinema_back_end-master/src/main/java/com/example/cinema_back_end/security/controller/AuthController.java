@@ -6,6 +6,9 @@ import com.example.cinema_back_end.entities.User;
 import com.example.cinema_back_end.security.jwt.JwtResponse;
 import com.example.cinema_back_end.security.jwt.JwtService;
 import com.example.cinema_back_end.security.service.IUserService;
+
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +45,8 @@ public class AuthController {
             String jwt = jwtService.generateTokenLogin(authentication);
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             User currentUser = userService.findByUsername(user.getUsername()).get();
-            return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), currentUser.getFullName()));
+            return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), currentUser.getFullName()
+            		,currentUser.getRoles()));
         }
         catch (Exception e){
             System.out.println(e);
@@ -65,10 +69,12 @@ public class AuthController {
             String jwt = jwtService.generateTokenLogin(authentication);
             UserDetails userDetails = (UserDetails) authentication.getPrincipal();
             User currentUser = userService.findByUsername(user.getUsername()).get();
-            return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), currentUser.getFullName()));
+            return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), currentUser.getFullName()
+            		,currentUser.getRoles()));
         }
         catch (Exception e){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            
         }
 
     }

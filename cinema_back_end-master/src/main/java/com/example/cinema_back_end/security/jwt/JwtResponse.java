@@ -1,25 +1,28 @@
 package com.example.cinema_back_end.security.jwt;
 
-import org.springframework.security.core.GrantedAuthority;
+import java.util.Set;
 
-import java.util.Collection;
-
+import com.example.cinema_back_end.entities.Role;
 public class JwtResponse {
     private Integer id;
     private String accessToken;
     private String tokenType = "Bearer";
     private String username;
     private String name;
+    private Set<Role> roles;
 
 
-    public JwtResponse(String accessToken, Integer id, String username, String name) {
-        this.accessToken = accessToken;
-        this.username = username;
-        this.name = name;
-        this.id = id;
-    }
 
-    public String getName() {
+    public JwtResponse(String accessToken, Integer id, String username, String fullname,
+			Set<Role> set) {
+		this.id = id;
+		this.accessToken = accessToken;
+		this.username = username;
+		this.name = fullname;
+		this.roles = set;
+	}
+
+	public String getName() {
         return name;
     }
 
@@ -58,6 +61,12 @@ public class JwtResponse {
     public void setUsername(String username) {
         this.username = username;
     }
+    public Set<Role> getRoles() {
+		return roles;
+	}
 
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
 
 }

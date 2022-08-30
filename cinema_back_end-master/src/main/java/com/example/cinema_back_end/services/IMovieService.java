@@ -13,7 +13,9 @@ import org.springframework.data.repository.query.Param;
 public interface IMovieService {
     List<MovieDTO> findAllShowingMovies();
     MovieDTO getById(Integer movieId);
-    List<MovieDTO> findAllShowingMoviesByName(String name);
+    List<MovieDTO> findAllMoviesByNameAndStatus(String name,Integer status);
     List<MovieDTO> getAllMovies();
     MovieDTO getMovieAndSchedules(Integer id);
+	MovieDTO getMovieAndSchedulesIsShowing(Integer id);
+	List<MovieDTO> findAllComingMovies();
 }

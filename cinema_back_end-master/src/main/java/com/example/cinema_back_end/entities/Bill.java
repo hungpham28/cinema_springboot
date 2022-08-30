@@ -20,6 +20,7 @@ public class Bill {
     private int id;
     @CreatedDate
     private LocalDateTime createdTime;
+    private double price;
     @ManyToOne
     @JoinColumn(nullable = false,name="user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)

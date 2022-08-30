@@ -23,4 +23,5 @@ public class MovieDTO {
     private String language;
     private String rated;
     private List<ScheduleDTO> schedules;
+    
 }

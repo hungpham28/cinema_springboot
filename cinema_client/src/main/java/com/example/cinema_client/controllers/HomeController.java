@@ -33,39 +33,22 @@ public class HomeController {
     @Autowired
     private RestTemplate restTemplate;
 
-    public static String apiGetShowingMovies = Api.baseURL+"/api/movies/showing";
-    public static String API_GET_BRANCHES_AND_SCHEDULES = Api.baseURL+"/api/branches/branches-schedules";
-    public static String API_GET_SHOWING_MOVIES_BY_NAME = Api.baseURL+"/api/movies/showing/search";
+    public static String API_GET_SHOWING_MOVIES = Api.baseURL+"/api/movies/showing";
+    public static String API_GET_COMING_MOVIES = Api.baseURL+"/api/movies/coming";
+    public static String API_GET_BRANCHES_AND_SCHEDULES = Api.baseURL+"/api/branches/branches-movies";
+    public static String API_GET_SHOWING_MOVIES_BY_NAME = Api.baseURL+"/api/movies/search";
     
     @GetMapping
     public String displayHomePage(Model model){
-        ResponseEntity<MovieDTO[]> responseMovies = restTemplate.getForEntity(apiGetShowingMovies,MovieDTO[].class);
-        MovieDTO[] movies = responseMovies.getBody();
+        ResponseEntity<MovieDTO[]> responseShowingMovies = restTemplate.getForEntity(API_GET_SHOWING_MOVIES,MovieDTO[].class);
+        MovieDTO[] showingMovies = responseShowingMovies.getBody();
         ResponseEntity<BranchDTO[]> responseBranches = restTemplate.getForEntity(API_GET_BRANCHES_AND_SCHEDULES,BranchDTO[].class);
         BranchDTO[] branches = responseBranches.getBody();
-        Map<Integer,MovieDTO> movieByBranch;
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
-		List<ScheduleDTO> schedules;
-        for(BranchDTO branch: branches) {
-        	movieByBranch= new HashMap<Integer,MovieDTO>();
-        	schedules=branch.getSchedules();
-        	for (ScheduleDTO schedule : schedules) {
-        		
-        		if(movieByBranch.get(schedule.getMovie().getId())==null) {
-        			
-        			schedule.getMovie().setSchedules(new ArrayList<>());
-        			schedule.getMovie().getSchedules().add(schedule);
-        			movieByBranch.put(schedule.getMovie().getId(),(MovieDTO) schedule.getMovie());
-        			
-        		}else {
-        			
-        			movieByBranch.get(schedule.getMovie().getId()).getSchedules().add(schedule);
-        		}
-			}
-        	branch.setMovies(new ArrayList<MovieDTO>(movieByBranch.values()));
-        }
+        ResponseEntity<MovieDTO[]> responseComingMovies = restTemplate.getForEntity(API_GET_COMING_MOVIES,MovieDTO[].class);
+        MovieDTO[] comingMovies = responseComingMovies.getBody();
         model.addAttribute("branches",branches);
-        model.addAttribute("movies",movies);
+        model.addAttribute("showingMovies",showingMovies);
+        model.addAttribute("comingMovies",comingMovies);
         model.addAttribute("user",new User());
         return "home";
     }

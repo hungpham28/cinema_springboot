@@ -28,15 +28,31 @@
     <div id="root">
         <header lang="vi" th:include="fragments/header :: header"/>
         <div class="container all-movie">
-            <div class="search">
-                <div id="wrap">
-                    <form autocomplete="on"><input id="search" name="search" type="text"
-                            placeholder="Nhập tên phim cần tìm" value=""><input id="search_submit" type="submit"></form>
+            <div class="search" style="display:flex;
+            							justify-content: space-between;
+            							flex-wrap: wrap;">
+               <select class="form-select" name="status" form="form-search"
+               style="width:200px;font-size: 32px;color: #007aff;" >
+					<option value="" >Tất cả</option>
+					<option value="0" th:selected="(${status} == 0)">Sắp chiếu</option>
+					<option value="1" th:selected="(${status} == 1)">Đang chiếu</option>
+				</select>
+                <div id="wrap" style="width:500px">
+                    <form id="form-search" autocomplete="on" method="post" style="display: flex">
+                    	<input id="search" name="search" type="text" placeholder="Nhập tên phim cần tìm"
+                    	style="    max-width: 700px;
+    							width: -webkit-fill-available;
+   								 font-size: 40px;">
+
+                        <input id="search_submit" type="submit" style="z-index: 4">
+                            
+                         </form>
                 </div>
             </div>
+
             <div class="row movielist-content">
                 <div class="movie-card col-md-6 col-sm-12"  th:each="movie: ${movies}" th:object="${movie}">
-                	<a class="card-link" th:href="@{/movie/detail(movieId=*{id})}">
+                	<a class="card-link" th:href="@{/movies/detail(movieId=*{id})}">
                         <div class="card-content">
                             <div class="content-left">
                                 <div class="left-header-movie">

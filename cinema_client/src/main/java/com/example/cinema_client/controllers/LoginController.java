@@ -50,11 +50,12 @@ public class LoginController {
         User user = new User();
         user.setUsername(request.getParameter("username"));
         user.setPassword(request.getParameter("password"));
+        JwtResponseDTO jwt;
         try {
             HttpEntity<User> httpEntity = new HttpEntity<>(user, httpHeaders);
             ResponseEntity<JwtResponseDTO> jwtResponse
                     = restTemplate.exchange(apiLogin, HttpMethod.POST, httpEntity, JwtResponseDTO.class);
-
+            jwt=jwtResponse.getBody();
             request.getSession().setAttribute("jwtResponse", (JwtResponseDTO) jwtResponse.getBody());
         }
         catch (HttpClientErrorException ex){
@@ -65,7 +66,11 @@ public class LoginController {
             model.addAttribute("pw",user.getPassword());
             return "login";
         }
-        return "redirect:/";
+        if(jwt.getRoles().contains("ROLE_ADMIN")) {
+        	return "redirect:/admin";
+        }else {
+        	return "redirect:/";
+        } 
 
     }
 
@@ -73,34 +78,25 @@ public class LoginController {
     public String register(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("hasErrors", true);
-            ResponseEntity<MovieDTO[]> response = restTemplate.getForEntity(HomeController.apiGetShowingMovies, MovieDTO[].class);
-            MovieDTO[] movies = response.getBody();
-            model.addAttribute("movies", movies);
             return "register";
         } else {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-            Set<Role> roles = new HashSet<>();
+            Set<Role> roles = new HashSet<Role>();
             Role roleClient = new Role();
             roleClient.setName("ROLE_CLIENT");
+//            roleClient.setId(1);
             roles.add(roleClient);
             user.setRoles(roles);
             try {
                 HttpEntity<User> httpEntity = new HttpEntity<>(user, httpHeaders);
                 ResponseEntity<JwtResponseDTO> jwtResponse
                         = restTemplate.exchange(API_REGISTER, HttpMethod.POST, httpEntity, JwtResponseDTO.class);
-
                 request.getSession().setAttribute("jwtResponse", (JwtResponseDTO) jwtResponse.getBody());
             }catch (HttpClientErrorException ex){
                 model.addAttribute("registerError",ex.getResponseBodyAsString());
                 model.addAttribute("hasErrors", true);
-                ResponseEntity<MovieDTO[]> response = restTemplate.getForEntity(HomeController.apiGetShowingMovies, MovieDTO[].class);
-                MovieDTO[] movies = response.getBody();
-                model.addAttribute("movies", movies);
-                model.addAttribute("user",new User());
-                model.addAttribute("fn",user.getFullName());
-                model.addAttribute("un",user.getUsername());
-                model.addAttribute("pw",user.getPassword());
+                model.addAttribute("user",user);
                 return "register";
             }
             return "redirect:/";

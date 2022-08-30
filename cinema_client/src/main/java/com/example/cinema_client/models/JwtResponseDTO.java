@@ -3,6 +3,7 @@ package com.example.cinema_client.models;
 import lombok.Data;
 
 import java.util.List;
+import java.util.Set;
 
 @Data
 public class JwtResponseDTO {
@@ -11,4 +12,5 @@ public class JwtResponseDTO {
     private String name;
     private String accessToken;
     private String tokenType;
+    private Set<Role> roles;
 }

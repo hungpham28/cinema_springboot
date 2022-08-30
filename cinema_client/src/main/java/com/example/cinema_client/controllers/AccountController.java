@@ -163,4 +163,40 @@ public class AccountController {
     	
     	return "profile";
     }
+    @GetMapping("/admin")
+    public String displayMainPage(Model model, HttpServletRequest request){
+        HttpSession session = request.getSession();
+        // Gắn access token jwt vào header để gửi kèm request
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+        JwtResponseDTO jwtResponseDTO = (JwtResponseDTO)session.getAttribute("jwtResponse");
+        headers.set(HttpHeaders.AUTHORIZATION,"Bearer "+jwtResponseDTO.getAccessToken());
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+
+        // Gọi api lấy ra lịch được chọn
+        String urlTemplate = UriComponentsBuilder.fromHttpUrl(API_GET_TICKETS)
+                .queryParam("userId", "{userId}")
+                .encode()
+                .toUriString();
+        Map<String,String> listRequestParam = new HashMap<>();
+        listRequestParam.put("userId", jwtResponseDTO.getId()+"");
+
+        ResponseEntity<TicketDTO[]> response = restTemplate.exchange(urlTemplate, HttpMethod.GET,entity,TicketDTO[].class
+        ,listRequestParam);
+
+        TicketDTO[] listTickets = response.getBody();
+        // Gọi api lấy ra thông tin người dùng
+        urlTemplate = UriComponentsBuilder.fromHttpUrl(API_GET_PROFILE)
+                .queryParam("userId", "{userId}")
+                .encode()
+                .toUriString();
+
+        ResponseEntity<User> responseUser = restTemplate.exchange(urlTemplate, HttpMethod.GET,entity,User.class
+        ,listRequestParam);
+
+        User user = responseUser.getBody();
+        model.addAttribute("listTickets",listTickets);
+        model.addAttribute("user",user);
+        return "admin";
+    }
 }

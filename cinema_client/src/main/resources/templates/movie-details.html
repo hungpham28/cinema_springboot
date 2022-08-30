@@ -18,6 +18,14 @@
     <title>AP Movie</title>
     <link th:href="@{/css/2.fd207d57.chunk.css}" rel="stylesheet"/>
     <link th:href="@{/css/main.ffa69c8e.chunk.css}" rel="stylesheet"/>
+    <style type="text/css">
+    	.all-movie .search #wrap input[type=text] {
+		    width: max-content;
+		    z-index: 1;
+		    border-bottom: 1px solid #bbb;
+		    cursor: text;
+		}
+    </style>
 </head>
 <body data-new-gr-c-s-check-loaded="14.1073.0" data-gr-ext-installed="" style="">
     <div id="root" th:object="${movie}">
@@ -47,8 +55,9 @@
                             
                             <div class="mb-3 d-flex justify-content-start align-items-center"><span
                                     class="age--C">GP09</span><span class="name" th:text="*{name}"></span></div>
-                            <p class="during" th:text="*{duration}+' phút'"></p><a href="#movieTheater"><button class="bookTicket-btn">Mua
-                                    Vé</button></a>
+                            <p class="during" th:text="*{duration}+' phút'"></p>
+                            <a href="#movieTheater" id="btn-buy-ticket">
+                            <button class="bookTicket-btn">Mua Vé</button></a>
                         </div>
                     </div>
                     <div class="movie__rating d-flex justify-content-end col-3">
@@ -239,6 +248,9 @@
                     var videoSrc = $(this).data( "src" );
                     $("#video").attr('src',videoSrc); 
                 });
+                $("#btn-buy-ticket").click(function(){
+                	$("#pills-home-tab").trigger('click');
+                })
             });
     
         
