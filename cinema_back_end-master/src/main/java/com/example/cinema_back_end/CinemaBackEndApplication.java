@@ -166,6 +166,17 @@ public class CinemaBackEndApplication {
 //            admin.setRoles(roles);
 //            userService.save(admin);
 //         }
+//
+//      User admin = new User();
+//      Set<Role> roles = new HashSet<>();
+//      Role roleAdmin = new Role();
+//      roleAdmin.setName("ROLE_ADMIN");
+//      roles.add(roleAdmin);
+//      admin.setFullName("ADMIN");
+//      admin.setUsername("admin@gmail.com");
+//      admin.setPassword("123456");
+//      admin.setRoles(roles);
+//      userService.save(admin);
 
 //        List<Movie> movies = movieRepository.findAll();
 //        if (movies.isEmpty()) {

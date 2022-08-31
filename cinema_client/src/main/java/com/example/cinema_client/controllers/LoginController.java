@@ -67,11 +67,12 @@ public class LoginController {
             model.addAttribute("pw",user.getPassword());
             return "login";
         }
-        if(jwt.getRoles().contains("ROLE_ADMIN")) {
-        	return "redirect:/admin";
-        }else {
-        	return "redirect:/";
-        } 
+        for(Role role: jwt.getRoles()) {
+        	if(role.equals("ROLE_ADMIN")) {
+        		return "redirect:/admin";
+        	}
+        }
+        	return "redirect:/"; 
 
     }
 
