@@ -62,6 +62,7 @@ public class LoginController {
             model.addAttribute("loginError",ex.getResponseBodyAsString());
             model.addAttribute("hasLoginErrors", true);
             model.addAttribute("user",new User());
+            System.out.println(ex);
             model.addAttribute("un",user.getUsername());
             model.addAttribute("pw",user.getPassword());
             return "login";
