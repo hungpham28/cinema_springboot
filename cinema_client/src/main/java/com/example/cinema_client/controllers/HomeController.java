@@ -53,22 +53,22 @@ public class HomeController {
         return "home";
     }
     
-    @PostMapping
-    public String searchMoviesByName(HttpServletRequest request, Model model){
-        // Gọi api lấy ra lịch được chọn
-        String urlTemplate = UriComponentsBuilder.fromHttpUrl(API_GET_SHOWING_MOVIES_BY_NAME)
-                .queryParam("name", "{name}")
-                .encode()
-                .toUriString();
-        Map<String,String> listRequestParam = new HashMap<>();
-        listRequestParam.put("name", request.getParameter("movie-name"));
-        ResponseEntity<MovieDTO[]> response = restTemplate.getForEntity(urlTemplate,MovieDTO[].class,listRequestParam);
-        MovieDTO[] movies = response.getBody();
-        if(movies.length==0){
-            return "movie-not-found";
-        }
-        model.addAttribute("movies",movies);
-        model.addAttribute("user",new User());
-        return "home";
-    }
+//    @PostMapping
+//    public String searchMoviesByName(HttpServletRequest request, Model model){
+//        // Gọi api lấy ra lịch được chọn
+//        String urlTemplate = UriComponentsBuilder.fromHttpUrl(API_GET_SHOWING_MOVIES_BY_NAME)
+//                .queryParam("name", "{name}")
+//                .encode()
+//                .toUriString();
+//        Map<String,String> listRequestParam = new HashMap<>();
+//        listRequestParam.put("name", request.getParameter("movie-name"));
+//        ResponseEntity<MovieDTO[]> response = restTemplate.getForEntity(urlTemplate,MovieDTO[].class,listRequestParam);
+//        MovieDTO[] movies = response.getBody();
+//        if(movies.length==0){
+//            return "movie-not-found";
+//        }
+//        model.addAttribute("movies",movies);
+//        model.addAttribute("user",new User());
+//        return "home";
+//    }
 }

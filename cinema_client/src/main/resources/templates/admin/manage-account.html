@@ -49,12 +49,12 @@
                     <tbody>
 
 
-                      <tr>
+                      <tr th:each="user : ${users}">
                       	<td ></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td style="max-width: 200px"></td>
+                        <td th:text="${user.fullName}"></td>
+                        <td th:text="${user.username}"></td>
+                        <td >******</td>
+                        <td style="max-width: 200px" th:text="${user.phone}"></td>
 			            <td style=" min-width: 80px" >
 			            	<button class="btn-update" style="background-color: #007bff;border-radius: 8%;color: antiquewhite;"><i class="fa fa-wrench" aria-hidden="true"></i>
 			            	</button>
@@ -71,7 +71,7 @@
             <td>
             	<form id="ADD_form" method="post" style="display:contents" >
             		<input type="text" name="type" style="display: none" value="ADD"></input>
-            		<input type="text" name="shopID" style="display: none" value=""></input>
+            		<input type="text" name="userId" style="display: none" value=""></input>
             		<button style="background-color:  #17a2b8;border-radius: 8%;color: antiquewhite; ">
             			<i class="fa fa-plus" aria-hidden="true"></i>
             		</button>
@@ -88,7 +88,7 @@
             <form method="post">
             <input type="text" name="type" style="display: none" value="PUT"></input>
             <input id="update-id" type="text" name="id" style="display: none" ></input>
-            <input type="text" name="shopID" style="display: none" value=""></input>
+            <input type="text" name="userId" style="display: none" value=""></input>
               <div class="form-item">
                 <label>Họ và tên</label>
                 <input id="update-product" type="text" name="product" >

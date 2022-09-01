@@ -2,7 +2,7 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <link rel="icon" href="favicon.ico">
+    <link th:href="@{/css/main.css}" rel="stylesheet"/>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="#000000">
     <meta name="description" content="Web site created using create-react-app">
@@ -36,10 +36,10 @@
                 <div class="formSocial">
                     <form class="formLogin" th:action="@{/login}" th:object="${user}" method="post">
                         <div class="form-group">
-                        	<input class="input" name="taiKhoan" placeholder="Tài khoản" th:field="*{username}" th:value="${un}">
+                        	<input class="input" name="taiKhoan" placeholder="Tài khoản" th:field="*{username}" />
                         	<span class="text-danger"></span></div>
                         <div class="form-group">
-                        	<input class="input" name="matKhau" type="password" placeholder="Mật khẩu" th:field="*{password}" th:value="${pw}">
+                        	<input class="input" name="matKhau" type="password" placeholder="Mật khẩu" th:field="*{password}" />
                         	<span class="text-danger"></span>
                         </div>
                         <div class="form-group"><button class="btnLogin" type="submit">Đăng nhập</button></div>
@@ -50,23 +50,23 @@
             </div>
         </div>
     </section>
-<div id="error--login" class="swal-overlay swal-overlay--show-modal" tabindex="-1" th:if="${hasLoginErrors}">
-  <div class="swal-modal" role="dialog" aria-modal="true"><div class="swal-icon swal-icon--error">
-    <div class="swal-icon--error__x-mark">
-      <span class="swal-icon--error__line swal-icon--error__line--left"></span>
-      <span class="swal-icon--error__line swal-icon--error__line--right"></span>
-    </div>
-  </div><div class="swal-title" style="">Tài khoản hoặc mật khẩu không đúng!</div><div class="swal-footer"><div class="swal-button-container">
-
-    <button class="swal-button swal-button--confirm">OK</button>
-
-    <div class="swal-button__loader">
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-
-  </div></div></div></div>
+<div id="error--login" class="swal-overlay " tabindex="-1"  th:classappend="${hasLoginErrors} ? swal-overlay--show-modal : ''">
+  <div class="swal-modal" role="dialog" aria-modal="true">
+	  <div class="swal-icon swal-icon--error">
+	    <div class="swal-icon--error__x-mark">
+	      <span class="swal-icon--error__line swal-icon--error__line--left"></span>
+	      <span class="swal-icon--error__line swal-icon--error__line--right"></span>
+	    </div>
+	  </div>
+	  <div class="swal-title" style="">Tài khoản hoặc mật khẩu không đúng!</div>
+	  <div class="swal-footer">
+	  	<div class="swal-button-container">
+	    	<button class="swal-button swal-button--confirm">OK</button>
+	    	<div class="swal-button__loader"></div>
+	  	</div>
+	  </div>
+  </div>
+  </div>
     <footer lang="vi" class="container" th:include="fragments/footer :: footer"/>
 </div>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"

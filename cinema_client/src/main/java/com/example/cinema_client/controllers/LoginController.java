@@ -61,11 +61,12 @@ public class LoginController {
         catch (HttpClientErrorException ex){
             model.addAttribute("loginError",ex.getResponseBodyAsString());
             model.addAttribute("hasLoginErrors", true);
-            model.addAttribute("user",new User());
+            model.addAttribute("user",user);
             System.out.println(ex);
-            model.addAttribute("un",user.getUsername());
-            model.addAttribute("pw",user.getPassword());
             return "login";
+        }
+        if(jwt.getRoles().contains("ROLE_ADMIN")) {
+        	System.out.println("ok");
         }
         for(Role role: jwt.getRoles()) {
         	if(role.equals("ROLE_ADMIN")) {
