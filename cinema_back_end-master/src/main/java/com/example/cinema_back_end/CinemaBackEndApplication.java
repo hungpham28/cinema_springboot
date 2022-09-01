@@ -159,11 +159,11 @@ public class CinemaBackEndApplication {
 //            User admin = new User();
 //            Set<Role> roles = new HashSet<>();
 //            Role roleAdmin = new Role();
-//            roleAdmin.setName("ROLE_CLIENT");
+//            roleAdmin.setName("ROLE_ADMIN");
 //            roles.add(roleAdmin);
 //            admin.setFullName("Cong Huy");
 //            admin.setUsername("huync21@gmail.com");
-//            admin.setPassword("123");
+//            admin.setPassword("123456");
 //            admin.setRoles(roles);
 //            userService.save(admin);
 //         }
