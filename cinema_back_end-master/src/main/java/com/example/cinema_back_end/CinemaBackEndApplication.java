@@ -59,6 +59,7 @@ public class CinemaBackEndApplication {
     @PostConstruct
     public void init() {
         // Chạy 1 lần đầu app rồi bỏ comment đoạn này rồi chạy lại để add data ghế ngồi cho phòng 1
+    	//Bước 2: chạy tắt comment này rồi chạy lại lần nữa
 //        Room room = roomRepository.findById(1).get();
 //
 //        for(int i=1;i<=16;i++){
@@ -166,18 +167,8 @@ public class CinemaBackEndApplication {
 //            admin.setRoles(roles);
 //            userService.save(admin);
 //         }
-//
-//      User admin = new User();
-//      Set<Role> roles = new HashSet<>();
-//      Role roleAdmin = new Role();
-//      roleAdmin.setName("ROLE_ADMIN");
-//      roles.add(roleAdmin);
-//      admin.setFullName("ADMIN");
-//      admin.setUsername("admin@gmail.com");
-//      admin.setPassword("123456");
-//      admin.setRoles(roles);
-//      userService.save(admin);
 
+    	//Bước 1: tắt comment phía dưới chạy lần 1
 //        List<Movie> movies = movieRepository.findAll();
 //        if (movies.isEmpty()) {
 //            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
