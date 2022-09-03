@@ -91,4 +91,28 @@ public class BranchService implements IBranchService{
 			})
 			.collect(Collectors.toList());
 	}
+
+	@Override
+	public List<BranchDTO> findAll() {
+		return branchRepository.findAll().stream().map(branch -> modelMapper.map(branch, BranchDTO.class))
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public BranchDTO getById(Integer id) {
+		return modelMapper.map(branchRepository.getById(id),BranchDTO.class);
+	}
+
+	@Override
+	public void update(BranchDTO branch) {
+		
+		branchRepository.save(modelMapper.map(branch, Branch.class));
+		
+	}
+
+	@Override
+	public void remove(Integer id) {
+		branchRepository.deleteById(id);
+		
+	}
 }

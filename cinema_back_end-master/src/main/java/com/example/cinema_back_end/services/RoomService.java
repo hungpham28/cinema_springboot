@@ -1,5 +1,6 @@
 package com.example.cinema_back_end.services;
 
+import com.example.cinema_back_end.dtos.BranchDTO;
 import com.example.cinema_back_end.dtos.RoomDTO;
 import com.example.cinema_back_end.repositories.IRoomRepository;
 import org.modelmapper.ModelMapper;
@@ -25,4 +26,33 @@ public class RoomService implements IRoomService{
                 .stream().map(room -> modelMapper.map(room,RoomDTO.class))
                 .collect(Collectors.toList());
     }
+
+	@Override
+	public List<RoomDTO> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public RoomDTO getById(Integer id) {
+		
+		return modelMapper.map(roomRepository.getById(id),RoomDTO.class);
+	}
+
+	@Override
+	public void update(RoomDTO t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void remove(Integer id) {
+		roomRepository.deleteById(id);
+		
+	}
+	
+	public List<RoomDTO> getRoomsByBranch(Integer branchId){
+		return roomRepository.findRoomsByBranch_Id(branchId).stream()
+				.map(room->modelMapper.map(room, RoomDTO.class)).collect(Collectors.toList());
+	}
 }

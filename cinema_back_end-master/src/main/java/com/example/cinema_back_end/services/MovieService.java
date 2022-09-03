@@ -83,4 +83,17 @@ public class MovieService implements IMovieService{
                 .map(movie -> modelMapper.map(movie, MovieDTO.class))
                 .collect(Collectors.toList());
 	}
+	@Override
+	public List<MovieDTO> findAll() {
+		return movieRepository.findAll().stream().map(movie->modelMapper.map(movie, MovieDTO.class)).collect(Collectors.toList());
+	}
+	@Override
+	public void update(MovieDTO movie) {
+		movieRepository.save(modelMapper.map(movie, Movie.class));
+	}
+	@Override
+	public void remove(Integer id) {
+		movieRepository.deleteById(id);
+		
+	}
 }

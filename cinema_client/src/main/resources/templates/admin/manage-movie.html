@@ -108,51 +108,6 @@
     </table>
 	</div></div></div></div></div></div>
 	</main>
-    <section id="contact" class="close" style="z-index: 9;">
-        <div class="contact-box">
-          <div class="contact-links">
-            <img id="update-img"src="https://cf.shopee.vn/file/575e04c0e1d08b5f1b9f624a8d6b1419" alt="">
-          </div>
-          <div class="contact-form-wrapper">
-        <label class="btn-close" style="position: absolute;right: 10px; top: 6px;padding: 10px;font-size: 20px;cursor: pointer;"><i class="fa fa-times" aria-hidden="true"></i></label>
-            <form method="post">
-            <input type="text" name="type" style="display: none" value="PUT"></input>
-            <input id="update-id" type="text" name="id" style="display: none" ></input>
-            <input type="text" name="shopID" style="display: none" value="<%=shop.getId()%>"></input>
-              <div class="form-item">
-                <label>Name Product</label>
-                <input id="update-product" type="text" name="product" >
-              </div>
-              <div class="form-item">
-                <label>Price Origin</label>
-                <input id="update-priceO" type="text" name="priceO" >
-              </div>
-              <div class="form-item">
-                <label>Price Sale</label>
-                <input id="update-priceS" type="text" name="priceS" >
-              </div>
-              <div class="form-item">
-                <label>URL image</label>
-                <input id="update-url" type="text" name="url" >
-              </div>
-              <input id="update-category" type="text" name="category0-ID" style="display: none">
-              <div class="form-item">
-                <label>Category</label>
-						  <select id="select-state" name="categoryID" placeholder="Pick a state...">
-							<%
-							for(Orders category: categoryList){
-							%>
-							<option value="<%=category.getCategoryID()%>"><%=category.getNameCategory()%></option>
-							<%
-								}
-							%>
-						  </select>
-              </div>
-              <button class="submit-btn">Update</button>  
-            </form>
-          </div>
-        </div>
-      </section>
     <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
     <script th:src="@{/js/popper.min.js}"></script>
     <script th:src="@{/js/bootstrap.min.js}"></script>

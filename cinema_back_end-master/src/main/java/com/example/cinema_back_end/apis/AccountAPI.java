@@ -18,7 +18,7 @@ import com.example.cinema_back_end.entities.User;
 import com.example.cinema_back_end.security.jwt.JwtService;
 import com.example.cinema_back_end.security.service.IUserService;
 
-@CrossOrigin("*")
+
 @RestController
 @RequestMapping("/api/account")
 public class AccountAPI {

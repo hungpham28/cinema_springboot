@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping(value="/api/branches", produces = "application/json")
 public class BranchApi {
     @Autowired

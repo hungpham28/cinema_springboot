@@ -9,6 +9,7 @@ import java.util.Set;
 
 @Data
 public class User {
+	private Integer id;
     @NotBlank(message = "Không được để trống email!")
     @Email(message = "Bạn cần nhập email hợp lệ!")
     private String username;

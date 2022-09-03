@@ -1,5 +1,6 @@
 package com.example.cinema_back_end.services;
 
+import com.example.cinema_back_end.dtos.RoomDTO;
 import com.example.cinema_back_end.dtos.SeatDTO;
 import com.example.cinema_back_end.entities.Room;
 import com.example.cinema_back_end.entities.Seat;
@@ -59,4 +60,10 @@ public class SeatService implements ISeatService{
          }).collect(Collectors.toList());
         return  filteredSeats;
     }
+
+	@Override
+	public List<SeatDTO> getAllSeatByRoom(Integer roomId) {
+		return seatRepository.getSeatByRoom_Id(roomId).stream()
+				.map(seat-> modelMapper.map(seat, SeatDTO.class)).collect(Collectors.toList());
+	}
 }

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.cinema_back_end.dtos.TicketDTO;
 import com.example.cinema_back_end.services.ITicketService;
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/api/admin/tickets")
 public class ManageTicketAPI {
     @Autowired

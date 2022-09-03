@@ -32,7 +32,8 @@ public class CinemaBackEndApplication {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("*");
+                registry.addMapping("/**").allowedOrigins("http://localhost:8081")
+                .allowedHeaders("*").allowedMethods("*");
             }
         };
     }

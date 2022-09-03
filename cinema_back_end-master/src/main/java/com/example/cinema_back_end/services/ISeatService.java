@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ISeatService {
     List<SeatDTO>  getSeatsByScheduleIdAndUserId(Integer scheduleId,Integer userId);
+    List<SeatDTO> getAllSeatByRoom(Integer roomId);
 }

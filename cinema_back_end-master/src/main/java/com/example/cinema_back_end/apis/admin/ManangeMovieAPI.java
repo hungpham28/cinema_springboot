@@ -5,22 +5,20 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.cinema_back_end.entities.User;
-import com.example.cinema_back_end.security.service.IUserService;
+import com.example.cinema_back_end.dtos.MovieDTO;
+import com.example.cinema_back_end.services.IMovieService;
 
 @RestController
-@RequestMapping("/api/admin/accounts")
-public class ManageAccountAPI {
+@RequestMapping("/api/admin/movies")
+public class ManangeMovieAPI {
 	@Autowired
-	private IUserService accountService;
-	
+	private IMovieService movieService;
 	@GetMapping
-	public ResponseEntity<List<User>> getAllUser(){
-		return new ResponseEntity<>(accountService.findAll(), HttpStatus.OK);
+	public ResponseEntity<List<MovieDTO>> getAllMovie() {
+		return new ResponseEntity<>(movieService.findAll(),HttpStatus.OK);
 	}
 }

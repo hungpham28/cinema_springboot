@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/api/seats")
 public class SeatApi {
     @Autowired
@@ -17,5 +16,9 @@ public class SeatApi {
     @GetMapping
     public List<SeatDTO> getSeatsByScheduleId(@RequestParam Integer scheduleId,@RequestParam Integer userId){
         return seatService.getSeatsByScheduleIdAndUserId(scheduleId,userId);
+    }
+    @PostMapping
+    public List<SeatDTO> getSeatsByRoomId(@RequestParam Integer roomId){
+        return seatService.getAllSeatByRoom(roomId);
     }
 }

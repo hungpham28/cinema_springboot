@@ -10,15 +10,12 @@ import java.time.LocalTime;
 import java.util.List;
 
 public interface IScheduleRepository extends JpaRepository<Schedule, Integer> {
-    @Query("SELECT DISTINCT s.startTime FROM Schedule s WHERE s.movie.id=:movieId AND s.branch.id" +
-            "= :branchId AND s.startDate=:startDate")
-    List<LocalTime> getStartTimeByMovie_IdAndBranch_IdAndStartDate(@Param("movieId") Integer movieId
-            , @Param("branchId") Integer branchId
-            , @Param("startDate") LocalDate startDate);
-
-    List<Schedule> getSchedulesByMovie_IdAndBranch_IdAndStartDateAndStartTimeAndRoom_Id(Integer movieId,Integer branchId
-    , LocalDate startDate,LocalTime startTime,Integer roomId);
-	  @Query(nativeQuery = true,value= "SELECT s.* FROM schedule s JOIN movie m on s.movie_id=m.id WHERE s.movie_id = :movieId"
+	List<Schedule> findSchedulesByBranch_Id(Integer branchId);
+    List<Schedule> findSchedulesByBranch_IdAndRoom_Id( Integer branchId,Integer movieId);
+    List<Schedule> findSchedulesByBranch_IdAndRoom_IdAndMovie_Id(Integer branchId,Integer roomId,Integer movieId);
+	@Query(nativeQuery = true,value= "SELECT s.* FROM schedule s JOIN movie m on s.movie_id=m.id WHERE s.movie_id = :movieId"
 	  + "   AND (s.start_date>curdate() OR (s.start_date=curdate() AND s.start_time>curtime()))")
 	  List<Schedule> getScheduleThatShowTheMovie(@Param("movieId") Integer movieId);
+    @Query("SELECT DISTINCT s.startDate FROM Schedule s")
+    List<LocalDate> getAllStartDateSchedule();
 }

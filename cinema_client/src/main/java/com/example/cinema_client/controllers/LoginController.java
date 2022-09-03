@@ -65,9 +65,6 @@ public class LoginController {
             System.out.println(ex);
             return "login";
         }
-        if(jwt.getRoles().contains("ROLE_ADMIN")) {
-        	System.out.println("ok");
-        }
         for(Role role: jwt.getRoles()) {
         	if(role.equals("ROLE_ADMIN")) {
         		return "redirect:/admin";
@@ -80,7 +77,6 @@ public class LoginController {
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("hasErrors", true);
             return "register";
         } else {
             HttpHeaders httpHeaders = new HttpHeaders();

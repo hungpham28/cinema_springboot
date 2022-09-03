@@ -24,17 +24,9 @@ public class ScheduleService implements IScheduleService {
     @Autowired
     private ModelMapper modelMapper;
     @Override
-    public List<String> getStartTimes(Integer movieId, Integer branchId, LocalDate startDate) {
-        return scheduleRepository.getStartTimeByMovie_IdAndBranch_IdAndStartDate(movieId,branchId,startDate)
-                .stream().map(localTime -> localTime.format(DateTimeFormatter.ofPattern("HH:mm")))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<ScheduleDTO> getSchedules(Integer movieId, Integer branchId, String startDate, String startTime,Integer roomId) {
-        return scheduleRepository.getSchedulesByMovie_IdAndBranch_IdAndStartDateAndStartTimeAndRoom_Id(movieId,branchId
-                        ,LocalDate.parse(startDate),LocalTime.parse(startTime), roomId)
-                .stream().map(schedule -> modelMapper.map(schedule,ScheduleDTO.class))
+    public List<String> getAllStartDateSchedule() {
+        return scheduleRepository.getAllStartDateSchedule()
+                .stream().map(localDate -> localDate.format(DateTimeFormatter.ofPattern("DD/MM/YY")))
                 .collect(Collectors.toList());
     }
 
@@ -73,4 +65,6 @@ public class ScheduleService implements IScheduleService {
 	public void remove(Integer id) {
 		scheduleRepository.deleteById(id);	
 	}
+
+
 }

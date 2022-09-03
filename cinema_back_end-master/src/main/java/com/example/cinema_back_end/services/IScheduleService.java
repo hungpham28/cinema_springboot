@@ -7,7 +7,5 @@ import java.time.LocalTime;
 import java.util.List;
 
 public interface IScheduleService extends IGeneralService<ScheduleDTO>{
-    List<String> getStartTimes(Integer movieId, Integer branchId, LocalDate startDate);
-    List<ScheduleDTO> getSchedules(Integer movieId,Integer branchId,String startDate, String startTime,
-                                   Integer roomId);
+	List<String> getAllStartDateSchedule();
 }
