@@ -48,8 +48,6 @@
     	var curURL=window.location.href;
     	$(".nav-menu ul li").filter(function( index ) {
     		var tag= $( "a", this ).attr("href");
-    		console.log(tag)
-    		console.log(curURL.includes(tag) && tag!="/admin")
     	    return curURL.includes(tag) && tag!="/admin";
     	  }).addClass("active");
     });

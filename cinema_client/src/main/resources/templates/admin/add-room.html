@@ -5,6 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link th:href="@{/css/main.css}" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
   <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
@@ -86,7 +87,7 @@
                 <option th:each="branch: ${branches}" th:value="${branch.id}" th:text="${branch.name}"></option>
               </select>
             </div>
-            <div class="film__info" style="margin:0px 20px 0 0 ;">
+            <div id="info-room" class="film__info" style="margin:0px 20px 0 0 ;">
               <div class="input-group mb-3">
                 <div class="input-group-prepend">
                   <span class="input-group-text" id="inputGroup-sizing-default">Phòng số</span>
@@ -117,7 +118,7 @@
 
             </div>
             
-            <div id="btnBook" class="btnBook btn btn-primary" style="background-image: none;" data-toggle="modal"
+            <div id="btnAddRoom" class="btnBook btn btn-primary" style="background-image: none;" data-toggle="modal"
               data-target="#CreditModal">
               UPDATE</div>
           </div>
@@ -126,7 +127,44 @@
       </div>
     </div>
   </main>
+  <div id="success" class="swal-overlay notify " tabindex="-1">
+  <div class="swal-modal" role="dialog" aria-modal="true"><div class="swal-icon swal-icon--success">
+    <span class="swal-icon--success__line swal-icon--success__line--long"></span>
+    <span class="swal-icon--success__line swal-icon--success__line--tip"></span>
 
+    <div class="swal-icon--success__ring"></div>
+    <div class="swal-icon--success__hide-corners"></div>
+  </div><div class="swal-title" >Đã tạo phòng thành công!</div><div class="swal-text" style=""></div><div class="swal-footer"><div class="swal-button-container">
+
+    <button class="swal-button swal-button--confirm">OK</button>
+
+    <div class="swal-button__loader">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+  </div></div></div></div>
+  <div id="error" class="swal-overlay notify" tabindex="-1" >
+  <div class="swal-modal" role="dialog" aria-modal="true"><div class="swal-icon swal-icon--error">
+    <div class="swal-icon--error__x-mark">
+      <span class="swal-icon--error__line swal-icon--error__line--left"></span>
+      <span class="swal-icon--error__line swal-icon--error__line--right"></span>
+    </div>
+  </div>
+  	<div id="text-error" class="swal-title" ></div>
+  	<div class="swal-footer">
+  <div class="swal-button-container">
+
+    <button class="swal-button swal-button--confirm">OK</button>
+
+    <div class="swal-button__loader">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+  </div></div></div></div>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
@@ -138,12 +176,15 @@
   <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
   <script th:src="@{/js/popper.min.js}"></script>
   <script th:src="@{/js/main.js}"></script>
-  <script>
+  <script th:inline="javascript">
 
   $(document).ready(function() {
 	    var slot=$(".slot__row")
-	    for(var i=1;i<=128;i++){
-	    	slot.append('<i class="fa fa-couch slot__item"></i>')
+	    ABC=['A','B','C','D','E','F','G','H']
+	    for(var i=0;i<8;i++){
+	    	for(var j=1;j<=16;j++){
+	    		slot.append('<i class="fa fa-couch slot__item" data-name='+'"'+ABC[i]+j+'"'+'></i>')
+	    	}
 	    }
     $(".slot__item").click(function(){
       $(this).attr("class", $('#listSeat').find(':selected').data("class"))
@@ -153,6 +194,68 @@
       if($(this).val()==0) $("#example-seat").attr("style","color:#949494")
       if($(this).val()==1) $("#example-seat").attr("style","color:#fb4226")
       if($(this).val()==2) $("#example-seat").attr("style","color:#FFFF")
+    });
+
+  //submit form add Room
+	$("#btnAddRoom").click(function(){
+		var seats=[]
+		var roomId=$('#listRoom').find(":selected").val()
+		var blockedSeat=0;
+		$(".slot__row i").each(function() {
+			vip=false
+			active=true
+			if($(this).hasClass("item--vip")) {
+				vip=true
+			}
+			else{
+				if($(this).hasClass("item--blocked")) {
+					active=false
+					blockedSeat++;
+				}
+			}
+			seats.push({
+				'name':$(this).data('name'),
+				'active':active,
+				'vip':vip,
+			})
+		})
+        var json = JSON.stringify(
+        			{
+						'id':$('#listRoom').find(":selected").val(),
+						'imgURL':$('#info-room input').eq(2).val(),
+						'name':$('#info-room input').eq(0).val(),
+						'totalArea':$('#info-room input').eq(1).val(),
+						'capacity':seats.length-blockedSeat,
+						'branch':{
+							'id':$('#listBranch').find(":selected").val()
+						},
+        				'seats':seats
+        			
+        			});
+        
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:8080/api/admin/rooms/add",
+            headers: {"Authorization": "Bearer "+[[${session.jwtResponse.accessToken}]]},
+            data: json,
+            contentType: "application/json; charset=utf-8",
+            success:function(data){
+            	//show notify
+            	$("#success").addClass("swal-overlay--show-modal")
+
+				seats=[]
+      			
+            },
+            error: function (e) {
+            	$("#text-error").html(e.responseText)
+            	$("#error").addClass("swal-overlay--show-modal")
+            }
+        });
+		
+    });
+	//close notify
+    $(".notify").click(function(e){
+        $(this).removeClass("swal-overlay--show-modal");
     });
 });
   </script>

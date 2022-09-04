@@ -66,4 +66,21 @@ public class SeatService implements ISeatService{
 		return seatRepository.getSeatByRoom_Id(roomId).stream()
 				.map(seat-> modelMapper.map(seat, SeatDTO.class)).collect(Collectors.toList());
 	}
+
+	@Override
+	public void addAllSeat(List<SeatDTO> seats,Integer roomId) {
+		seatRepository.saveAll(seats.stream().map(
+				seat->{
+						Seat seatEntity=modelMapper.map(seat, Seat.class);
+						seatEntity.setRoom(new Room());
+						seatEntity.getRoom().setId(roomId);
+						return seatEntity;
+					}).collect(Collectors.toList()));
+	}
+
+	@Override
+	public void updateSeats(List<SeatDTO> seats) {
+		seatRepository.saveAll(seats.stream().map(seat-> modelMapper.map(seat, Seat.class))
+				.collect(Collectors.toList()));
+	}
 }

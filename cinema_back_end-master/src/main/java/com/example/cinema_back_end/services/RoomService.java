@@ -2,6 +2,7 @@ package com.example.cinema_back_end.services;
 
 import com.example.cinema_back_end.dtos.BranchDTO;
 import com.example.cinema_back_end.dtos.RoomDTO;
+import com.example.cinema_back_end.entities.Room;
 import com.example.cinema_back_end.repositories.IRoomRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +41,16 @@ public class RoomService implements IRoomService{
 	}
 
 	@Override
-	public void update(RoomDTO t) {
-		// TODO Auto-generated method stub
+	public void update(RoomDTO room) {
+		roomRepository.save(modelMapper.map(room, Room.class));
 		
 	}
-
+	@Override
+	public RoomDTO add(RoomDTO room) {
+		return modelMapper.map(
+				roomRepository.save(modelMapper.map(room,Room.class))
+				,RoomDTO.class);
+	}
 	@Override
 	public void remove(Integer id) {
 		roomRepository.deleteById(id);

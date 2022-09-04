@@ -10,4 +10,5 @@ public class SeatDTO {
     private boolean isVip;
     private int isOccupied;
     private boolean isChecked;
+    private RoomDTO room;
 }

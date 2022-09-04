@@ -9,6 +9,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,42 +35,10 @@ public class BranchController {
 
     @GetMapping
     public String displayBranchesPage( Model model, HttpServletRequest request){
-        // Gắn movie id vào session lát sau dùng tiếp để tìm ra lịch xem cụ thể dựa trên movie id đó
-    	Integer movieId=Integer.parseInt(request.getParameter("movieId"));
-        HttpSession session = request.getSession();
-        session.setAttribute("movieId",movieId);
-
-        // Gắn access token jwt vào header để gửi kèm request
-        HttpHeaders headers = new HttpHeaders();
-        headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
-        JwtResponseDTO jwtResponseDTO = (JwtResponseDTO)session.getAttribute("jwtResponse");
-        headers.set(HttpHeaders.AUTHORIZATION,"Bearer "+jwtResponseDTO.getAccessToken());
-        HttpEntity<?> entity = new HttpEntity<>(headers);
-
-        // Truyền tham số movieId vào query string rồi gửi request
-        String urlTemplate = UriComponentsBuilder.fromHttpUrl(apiGetBranches)
-                .queryParam("movieId", "{movieId}")
-                .encode()
-                .toUriString();
-        Map<String, Integer> params = new HashMap<>();
-        params.put("movieId", movieId);
-
-        HttpEntity<BranchDTO[]> response = restTemplate.exchange(
-                urlTemplate,
-                HttpMethod.GET,
-                entity,
-                BranchDTO[].class,
-                params
-        );
+        ResponseEntity<BranchDTO[]> response = restTemplate.getForEntity(apiGetBranches,BranchDTO[].class);
         BranchDTO[] branchDTOS = response.getBody();
         model.addAttribute("branches",branchDTOS);
-        model.addAttribute("user",new User());
-        return "branches";
+        return "cluster-cinema";
 
-    }
-    @GetMapping("/all")
-    public String displayAllBranchesPage(Model model, HttpServletRequest request){
-		return "cluster-cinema";
-    	
     }
 }

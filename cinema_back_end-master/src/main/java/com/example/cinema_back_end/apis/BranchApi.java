@@ -21,7 +21,11 @@ public class BranchApi {
         return new ResponseEntity<>(branchService.getBranchesThatShowTheMovie(movieId), HttpStatus.OK);
     }
     @GetMapping("/branches-movies")
-    private ResponseEntity<List<BranchDTO>> getAllBranches(){
+    private ResponseEntity<List<BranchDTO>> getAllBranchesAndMovies(){
         return new ResponseEntity<>(branchService.getBranchesAndSchedules(), HttpStatus.OK);
     }
+	@GetMapping
+	public ResponseEntity<List<BranchDTO>> getAllBranches(){
+		return new ResponseEntity<>(branchService.findAll(),HttpStatus.OK);
+	}
 }
