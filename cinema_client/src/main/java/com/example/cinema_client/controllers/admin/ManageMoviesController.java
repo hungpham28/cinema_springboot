@@ -64,9 +64,11 @@ public class ManageMoviesController {
         JwtResponseDTO jwtResponseDTO = (JwtResponseDTO)session.getAttribute("jwtResponse");
         headers.set(HttpHeaders.AUTHORIZATION,"Bearer "+jwtResponseDTO.getAccessToken());
         HttpEntity<?> entity = new HttpEntity<>(movie,headers);
+        System.out.println(movie);
         try {
         	ResponseEntity<String> response = restTemplate.exchange(API_GET_MOVIES,HttpMethod.PUT, entity, String.class);
-		} catch (Exception e) {
+        	System.out.println(response);
+        } catch (Exception e) {
 			System.out.println(e);
 		}
         return "redirect:/admin/movies";
