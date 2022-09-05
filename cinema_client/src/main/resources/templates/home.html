@@ -76,29 +76,6 @@
                 <div class="row">
                     <div id="movie__dropdown" class="select__item col-md-2 col-xs-6">
                         <div class="select__form"><select name="movie" id="slct">
-                                <option value="DEFAULT" selected="">Chọn phim</option>
-                                <option value="10530">Doctor stranger 2</option>
-                                <option value="10531">Nghề Siêu dễ</option>
-                                <option value="10532">Tăng tốc phía em</option>
-                                <option value="10533">aaaaaaaaaaaaaaab</option>
-                                <option value="10606">aaaaaaaaaaa</option>
-                                <option value="10612">CHUYỆN MA ĐÔ THỊ</option>
-                                <option value="10614">RỪNG SĂN NGƯỜI</option>
-                                <option value="10647">Black Adam</option>
-                                <option value="10648">Moonfall</option>
-                                <option value="10649">Captain Marvel 2</option>
-                                <option value="10677">578: Phát Đạn Của Kẻ Điên</option>
-                                <option value="10678">Liên Minh Siêu Thú DC (DC League Of Super Pets)</option>
-                                <option value="10679">Maika – Cô Bé Đến Từ Hành Tinh Khác</option>
-                                <option value="10680">Doraemon: Nobita Và Cuộc Chiến Vũ Trụ Tí Hon 2021</option>
-                                <option value="10681">John Wick: Chapter 4</option>
-                                <option value="10682">Phi Công Siêu Đẳng Maverick (Top Gun: Maverick)</option>
-                                <option value="10716">Phi công siêu đẳng</option>
-                                <option value="10729">test</option>
-                                <option value="10765">iron man 4</option>
-                                <option value="10766">Thor 5</option>
-                                <option value="10786">test1</option>
-                                <option value="10840">Detective Pikachu</option>
                             </select></div>
                     </div>
                     <div id="theater__dropdown" class="select__item col-md-2 col-xs-6">
@@ -214,7 +191,13 @@
             <section id="schedule" class="schedule container mx-auto">
                 <div class="schedule__content">
                     <div class="container">
-                        <h1 class="schedule__title text-center mb-4">Lịch Chiếu</h1>
+                        <h1 class="schedule__title text-center mb-4">Lịch Chiếu                         
+                        <span class="schedule__title text-center mb-4">
+	                        	<select name="select-date" id="select-date">
+	                                <option th:each="startDate: ${allStartDate}" th:value="${startDate}" th:text="${startDate}"></option>
+	                            </select>
+                        </span></h1>
+
                         <div class="schedule__row row bg-light">
                             <div class="main__tabContent col-md-10 col-sm-12" style="max-width: 100%">
 								<div class="tab-content" id="v-pills-tabContent">
@@ -259,7 +242,8 @@
 								                                            <ul class="d-flex flex-wrap">
 								                                                <li  class="timeshow__item" th:each="schedule: ${movie.schedules}">
 								                                                	<a class="timeshow__link" th:href="@{'/booking/' + ${schedule.id}}">
-								                                                		<span class="time__begin" th:text="${#temporals.format(schedule.startTime, 'HH:mm')}"></span>
+								                                                		<span class="time__begin" th:data-date="${#temporals.format(schedule.startDate, 'dd/MM/yyyy')}"
+								                                                		 th:text="${#temporals.format(schedule.startTime, 'HH:mm')}"></span>
 								                                                	</a>
 								                                                </li>
 								                                            </ul>
@@ -762,9 +746,23 @@
     
 	$(document).ready(function(){
 		
-			  $('#v-pills-tabContent .nav-link').first().trigger('click');
-		
-		  $(".owl-carousel").owlCarousel({
+		$('#v-pills-tabContent .nav-link').first().trigger('click');
+		function fillterSchedule(){
+			selectDate=$("#select-date").val()
+			$(".time__begin").each(function(){
+				if($(this).data("date")!=selectDate){
+					$(this).css("display","none");
+				}
+				else{
+					$(this).css("display","");
+				}
+			})
+		}
+		fillterSchedule();
+		$("#select-date").on("change",function(){
+			fillterSchedule();
+		})
+		$(".owl-carousel").owlCarousel({
 			    items:1,
 			    loop:true,
 			    margin:10,

@@ -37,6 +37,7 @@ public class HomeController {
     public static String API_GET_COMING_MOVIES = Api.baseURL+"/api/movies/coming";
     public static String API_GET_BRANCHES_AND_SCHEDULES = Api.baseURL+"/api/branches/branches-movies";
     public static String API_GET_SHOWING_MOVIES_BY_NAME = Api.baseURL+"/api/movies/search";
+    public static String API_GET_ALL_STARTDATE = Api.baseURL+"/api/schedule/all-schedule-dates";
     
     @GetMapping
     public String displayHomePage(Model model){
@@ -46,10 +47,13 @@ public class HomeController {
         BranchDTO[] branches = responseBranches.getBody();
         ResponseEntity<MovieDTO[]> responseComingMovies = restTemplate.getForEntity(API_GET_COMING_MOVIES,MovieDTO[].class);
         MovieDTO[] comingMovies = responseComingMovies.getBody();
+        ResponseEntity<String[]> responseStartDate = restTemplate.getForEntity(API_GET_ALL_STARTDATE,String[].class);
+        String[] allStartDate = responseStartDate.getBody();
         model.addAttribute("branches",branches);
         model.addAttribute("showingMovies",showingMovies);
         model.addAttribute("comingMovies",comingMovies);
-        model.addAttribute("user",new User());
+        System.out.println(allStartDate.length);
+        model.addAttribute("allStartDate",allStartDate);
         return "home";
     }
     
