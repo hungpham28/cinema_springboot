@@ -76,7 +76,7 @@ public class ManageSchedulesController {
 	    model.addAttribute("branches",branches);
 	    model.addAttribute("movies",movies);
 	    model.addAttribute("rooms",rooms);
-	    model.addAttribute("schedule",new ScheduleDTO());
+	   // model.addAttribute("schedule",new ScheduleDTO());
 	    model.addAttribute("schedule",schedule);
         return "admin/update-schedule";
     }
