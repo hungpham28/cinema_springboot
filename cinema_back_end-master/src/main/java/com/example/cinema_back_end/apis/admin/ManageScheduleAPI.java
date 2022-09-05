@@ -31,10 +31,6 @@ public class ManageScheduleAPI {
         return new ResponseEntity<>(scheduleService.findAll(), HttpStatus.OK);
     }
 
-    @PostMapping("/start-dates")
-    public List<String> getAllStartDate(@RequestParam Integer scheduleId){
-        return  scheduleService.getAllStartDateSchedule();
-    }
     @PostMapping
     public ResponseEntity<String> addSchedule(@RequestBody ScheduleDTO schedule){
     	scheduleService.update(schedule);

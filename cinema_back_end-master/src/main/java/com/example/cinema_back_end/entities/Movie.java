@@ -19,7 +19,7 @@ public class Movie {
     private String name;
     @Column(length = 1000)
     private String smallImageURl;
-    @Column(length = 500)
+    @Column(length = 1000)
     private String shortDescription;
     @Column(length = 1000)
     private String longDescription;

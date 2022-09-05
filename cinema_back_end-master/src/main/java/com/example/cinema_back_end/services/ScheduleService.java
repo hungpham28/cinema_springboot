@@ -26,7 +26,7 @@ public class ScheduleService implements IScheduleService {
     @Override
     public List<String> getAllStartDateSchedule() {
         return scheduleRepository.getAllStartDateSchedule()
-                .stream().map(localDate -> localDate.format(DateTimeFormatter.ofPattern("DD/MM/YY")))
+                .stream().map(localDate -> localDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
                 .collect(Collectors.toList());
     }
 

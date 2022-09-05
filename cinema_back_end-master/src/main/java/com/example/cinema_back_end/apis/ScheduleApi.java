@@ -20,7 +20,7 @@ public class ScheduleApi {
         return scheduleService.getById(scheduleId);
     }
     @GetMapping("/all-schedule-dates")
-    public List<String> getAllStartDate(@RequestParam Integer scheduleId){
+    public List<String> getAllStartDate(){
         return  scheduleService.getAllStartDateSchedule();
     }
 }
