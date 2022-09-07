@@ -8,4 +8,8 @@ import java.util.List;
 
 public interface IScheduleService extends IGeneralService<ScheduleDTO>{
 	List<String> getAllStartDateSchedule();
+
+	
+
+	List<ScheduleDTO> getSchedulesByBranchId(Integer branchId);
 }

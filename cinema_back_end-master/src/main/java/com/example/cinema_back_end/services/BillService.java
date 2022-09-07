@@ -1,6 +1,8 @@
 package com.example.cinema_back_end.services;
 
+import com.example.cinema_back_end.dtos.BillDTO;
 import com.example.cinema_back_end.dtos.BookingRequestDTO;
+import com.example.cinema_back_end.dtos.MovieDTO;
 import com.example.cinema_back_end.entities.Bill;
 import com.example.cinema_back_end.entities.Schedule;
 import com.example.cinema_back_end.entities.Ticket;
@@ -10,6 +12,8 @@ import com.example.cinema_back_end.repositories.IScheduleRepository;
 import com.example.cinema_back_end.repositories.ISeatRepository;
 import com.example.cinema_back_end.repositories.ITicketRepository;
 import com.example.cinema_back_end.security.repo.IUserRepository;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BillService implements IBillService{
@@ -30,7 +35,8 @@ public class BillService implements IBillService{
     private ISeatRepository seatRepository;
     @Autowired
     private IBillRepository billRepository;
-
+    @Autowired
+    private ModelMapper modelMapper;
     @Override
     @Transactional
     public void createNewBill(BookingRequestDTO bookingRequestDTO) throws RuntimeException {
@@ -63,4 +69,29 @@ public class BillService implements IBillService{
         });
 
     }
+
+	@Override
+	public List<BillDTO> findAll() {
+		// TODO Auto-generated method stub
+		return billRepository.findAll().stream().map(bill->modelMapper.map(bill, BillDTO.class)).collect(Collectors.toList());
+	}
+
+	@Override
+	public BillDTO getById(Integer billId) {
+		// TODO Auto-generated method stub
+		 return modelMapper.map(billRepository.getById(billId),BillDTO.class);
+	}	
+	
+
+	@Override
+	public void remove(Integer id) {
+		// TODO Auto-generated method stub
+		billRepository.deleteById(id);
+	}
+
+	@Override
+	public void update(BillDTO t) {
+		// TODO Auto-generated method stub
+		
+	}
 }

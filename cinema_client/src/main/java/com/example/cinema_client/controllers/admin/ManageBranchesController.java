@@ -51,7 +51,7 @@ public class ManageBranchesController {
 		return "admin/manage-branch";
 	}
 	@GetMapping("/update")
-    public String displayUpdateSchedulePage(@ModelAttribute("modelBranch") BranchDTO branch ,HttpSession session,Model model){
+    public String displayUpdateBranchPage(@ModelAttribute("modelBranch") BranchDTO branch ,HttpSession session,Model model){
         //Gắn access token jwt vào header để gửi kèm request
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);

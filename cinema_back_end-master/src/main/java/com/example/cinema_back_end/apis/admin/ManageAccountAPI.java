@@ -1,4 +1,4 @@
-package com.example.cinema_back_end.apis.admin;
+ package com.example.cinema_back_end.apis.admin;
 
 import java.util.List;
 

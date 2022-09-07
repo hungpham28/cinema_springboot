@@ -39,81 +39,35 @@
           <div class="col-lg-10 mx-auto">
             <div class="card rounded shadow border-0">
               <div class="card-body p-5 bg-white rounded">
-              	<a class="btn btn-success" th:href="@{/admin/movies/add}" style="margin-bottom: 20px;"><i class="fa fa-plus" aria-hidden="true"></i>
-              	<span>ADD movie</span> </a>
+             <!--   	<a class="btn btn-success" th:href="@{/admin/bills/add}" style="margin-bottom: 20px;"><i class="fa fa-plus" aria-hidden="true"></i>
+              	<span>ADD bill</span> </a>-->
                 <div class="table-responsive">
                   <table id="example" style="width:100%" class="table table-striped table-bordered">
                     <thead>
                       <tr>
                         <th >ID</th>
-                        <th >Tên Phim</th>
-                        <th >Poster </th>
-                        <th >Mô tả chi tiết</th>                      
-                        <th >Mô tả ngắn gọn</th>
-                        <th >Ảnh bìa</th>
-                        <th >Đạo diễn</th>
-                        <th >Diễn viên</th>
-                        <th >Thể loại</th>
-                        <th >Ngày chiếu</th>
-                        <th>Thời lượng</th>
-                        <th >Trailer</th>
-                        <th >Ngôn ngữ</th>
-                        <th >Giới hạn độ tuổi</th>                       
+                        <th >Ngày tạo</th>                                                              
+                        <th >Người mua</th>                                    
                         <th >Chức năng</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr th:each="movie : ${movies}">
-                      	<td  th:text="${movie.id}"></td>
-                      	<td  th:text="${movie.name}"></td>
-                        <td style="	display:flex; 
-                            		justify-content: space-between;
-    								flex-direction: row-reverse;">
-                        	
-                        	<img th:src="${movie.smallImageURl}" style="width: 80px;margin-right: 10px "/>
-                        </td>
+                      <tr th:each="bill : ${bills}">
+                      	<td  th:text="${bill.id}"></td>
                         
-                        <td  th:text="${movie.longDescription}"></td>
-                        <td  th:text="${movie.shortDescription}"></td>
-                       <td style="	display:flex; 
-                            		justify-content: space-between;
-    								flex-direction: row-reverse;">
-                        	
-                        	<img th:src="${movie.largeImageURL}" style="width: 120px;margin-right: 0px "/>
-                        </td>
-                        <td  th:text="${movie.director}"></td>
-                        <td  th:text="${movie.actors}"></td>
-                        <td  th:text="${movie.categories}"></td>
-                        <td  th:text="${movie.releaseDate}"></td>
-                        <td  th:text="${movie.duration}"></td>
-                       
-                        <td  th:text="${movie.trailerURL}"></td>
+                       	<td  th:text="${bill.createdTime}"></td>
+                      
+                        <td  th:text="${bill.user.username}"></td>
                         
-                        <td  th:text="${movie.language}"></td>
-                         <td  th:text="${movie.rated}"></td>
-			            <td >
-			            <form th:object="${modelMovie}" th:action="@{/admin/movies/update}" method="GET" style="display: contents;">
-			            	<input type="hidden" th:id="id" th:name="id" th:value="${movie.id}" />
-			            	<input type="hidden" th:id="name" th:name="name" th:value="${movie.name}" />
-			            	<input type="hidden" th:id="smallImageURl" th:name="smallImageURl" th:value="${movie.smallImageURl}" />
-			            	<input type="hidden" th:id="longDescription" th:name="longDescription" th:value="${movie.longDescription}" />
-							<input type="hidden" th:id="shortDescription" th:name="shortDescription" th:value="${movie.shortDescription}" />			            	
-			            	<input type="hidden" th:id="largeImageURL" th:name="largeImageURL" th:value="${movie.largeImageURL}" />
-			            	<input type="hidden" th:id="director" th:name="director" th:value="${movie.director}" />
-			            	<input type="hidden" th:id="actors" th:name="actors" th:value="${movie.actors}" />
-			            	<input type="hidden" th:id="categories" th:name="categories" th:value="${movie.categories}" />
-			            	<input type="hidden" th:id="releaseDate" th:name="releaseDate" th:value="${movie.releaseDate}" />
-			            	<input type="hidden" th:id="duration" th:name="duration" th:value="${movie.duration}" />
-			            	<input type="hidden" th:id="trailerURL" th:name="trailerURL" th:value="${movie.trailerURL}" />
-			            	<input type="hidden" th:id="language" th:name="language" th:value="${movie.language}" />
-							<input type="hidden" th:id="rated" th:name="rated" th:value="${movie.rated}" />
-			            	
-			            	<button th:data-movie-id="${movie.id}" class="btn-update" 
-			            	style="background-color: #007bff;border-radius: 8%;color: antiquewhite;">
-			            		<i class="fa fa-wrench" aria-hidden="true"></i>
-			            	</button>
-						</form>
-				            <button class="btn-delete" th:data-id="${movie.id}"
+  
+						<td>	
+							<a th:href="@{'/admin/bills/viewTickets?billId='+${bill.id}}">
+								<button  class="btn-update" 
+				            	style="background-color: #007bff;border-radius: 8%;color: antiquewhite;">
+				            		<i class="fa fa-wrench" aria-hidden="true"></i>
+				            	</button>
+							</a>
+				            <button class="btn-delete" th:data-id="${bill.id}"
 				            style="background-color: #E34724;border-radius: 8%;color: antiquewhite; ">
 				            	<i class="fa fa-trash" aria-hidden="true"></i>
 				            </button>
@@ -170,19 +124,10 @@
             columnDefs: [
                 { width: 80, targets: 0 },
                 { width: 100, targets: 1 },
-                { width: 100, targets: 2 },
-                { width: 1000, targets: 3 },
-                { width: 500, targets: 4 },
-                { width: 100, targets: 5 },
-                { width: 100, targets: 6 },
-                { width: 100, targets: 7 },
-                { width: 100, targets: 8 },
-                { width: 100, targets: 9 },
-                { width: 100, targets: 10 },
-                { width: 100, targets: 11 },
-                { width: 100, targets: 12 },
-                { width: 100, targets: 13 },
-                { width: 80, targets: 14 }
+                { width: 120, targets: 2 },
+                             
+                { width: 100, targets: 3 }
+              
             ],
             orderCellsTop: true,
             fixedHeader: true,
@@ -240,7 +185,7 @@
         $("#example").on("click",".btn-delete",function(){
         	var tag=$(this)
   		  $.ajax({
-		      url: "http://localhost:8080/api/admin/movies?movieId=" + $(this).data('id'),
+		      url: "http://localhost:8080/api/admin/bills?billId=" + $(this).data('id'),
 		      type: 'DELETE',
 	          headers: {"Authorization": "Bearer "+[[${session.jwtResponse.accessToken}]]},   
 		      success: function (data) {

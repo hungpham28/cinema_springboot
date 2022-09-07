@@ -13,4 +13,6 @@ public class BranchDTO {
     private String phoneNo;
     private List<ScheduleDTO> schedules;
     private List<MovieDTO> movies;
+    private Long total;
+    private Long totalTicket;
 }
