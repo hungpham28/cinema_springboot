@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.cinema_client.constants.Api;
@@ -57,17 +58,24 @@ public class ManageMoviesController {
     }
 	
 	@PostMapping("/update")
-    public String updateMoviePage(@ModelAttribute("movie") MovieDTO movie,HttpSession session,Model model){
+    public String updateMoviePage(@ModelAttribute("movie") MovieDTO movie,
+    		@RequestParam(name = "checkShowing", required = false, defaultValue = "false") boolean checkShowing,
+    		HttpSession session,Model model){
         //Gắn access token jwt vào header để gửi kèm request
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
         JwtResponseDTO jwtResponseDTO = (JwtResponseDTO)session.getAttribute("jwtResponse");
         headers.set(HttpHeaders.AUTHORIZATION,"Bearer "+jwtResponseDTO.getAccessToken());
+        //kiểm tra phim đang chiếu hay sắp chiếu
+    	if(checkShowing) {
+    		movie.setIsShowing(1);
+    	}
+    	else {movie.setIsShowing(0);
+    	}
+    	System.out.println(checkShowing);
         HttpEntity<?> entity = new HttpEntity<>(movie,headers);
-        System.out.println(movie);
         try {
         	ResponseEntity<String> response = restTemplate.exchange(API_GET_MOVIES,HttpMethod.PUT, entity, String.class);
-        	System.out.println(response);
         } catch (Exception e) {
 			System.out.println(e);
 		}
@@ -81,12 +89,21 @@ public class ManageMoviesController {
         return "admin/update-movie";
     }
     @PostMapping("/add")
-    public String addMoviePage(@ModelAttribute("movie") MovieDTO movie ,HttpSession session,Model model){
+    public String addMoviePage(@ModelAttribute("movie") MovieDTO movie ,
+    		@RequestParam(name = "checkShowing", required = false, defaultValue = "false") boolean checkShowing,
+    		HttpSession session,Model model){
         //Gắn access token jwt vào header để gửi kèm request
         HttpHeaders headers = new HttpHeaders();
         headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
         JwtResponseDTO jwtResponseDTO = (JwtResponseDTO)session.getAttribute("jwtResponse");
         headers.set(HttpHeaders.AUTHORIZATION,"Bearer "+jwtResponseDTO.getAccessToken());
+        //kiểm tra phim đang chiếu hay sắp chiếu
+    	if(checkShowing) {
+    		movie.setIsShowing(1);
+    	}
+    	else {movie.setIsShowing(0);
+    	}
+    	
         HttpEntity<MovieDTO> entity = new HttpEntity<>(movie,headers);
         try {
         	ResponseEntity<String> response = restTemplate.exchange(API_GET_MOVIES,HttpMethod.POST, entity, String.class);

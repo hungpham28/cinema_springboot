@@ -35,42 +35,49 @@
       <div class="container">
         <div class="row justify-content-center" style="margin: 40px;">
           <div class="col-md-6 text-center mb-5" >
-            <h2 class="heading-section">Update Branch</h2>
+            <h2 class="heading-section">ADD Account</h2>
           </div>
         </div>
         <div class="row justify-content-center">
           <div class="col-lg-10">
             <div class="wrapper img">
               <div class="row">
-                <div class="col-md-9 col-lg-7">
+                <div class="col-md-12 col-lg-12">
                   <div class="contact-wrap w-100 p-md-5 p-4">
                     <form method="POST" id="contactForm" name="contactForm" class="contactForm" 
-                    th:action="@{/admin/branches/update}" th:object="${branch}">
+                    th:action="@{/admin/accounts/add}" th:object="${user}">
                       	<input th:field="*{id}" type="hidden"/>
                       <div class="input-group mb-3">
                       <div class="input-group-prepend">
-                              <span class="input-group-text" id="inputGroup-sizing-default">Vị trí</span>
+                              <span class="input-group-text" id="inputGroup-sizing-default">Họ và tên</span>
                             </div>
-                            <input type="url" th:field="*{imgURL}" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            <input type="text" th:field="*{fullName}" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                              <span class="input-group-text" id="inputGroup-sizing-default">Tên chi nhánh</span>
+                              <span class="input-group-text" id="inputGroup-sizing-default">Username</span>
                             </div>
-                            <input type="text" th:field="*{name}" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            <input type="text" th:field="*{username}" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
-                              <span class="input-group-text" id="inputGroup-sizing-default">Địa chỉ</span>
+                              <span class="input-group-text" id="inputGroup-sizing-default">Password</span>
                             </div>
-                            <input type="text" th:field="*{diaChi}" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            <input type="password" th:field="*{password}" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                           </div>
                           <div class="input-group mb-3">
                             <div class="input-group-prepend">
                               <span class="input-group-text" id="inputGroup-sizing-default">Số điện thoại</span>
                             </div>
-                            <input type="number" th:field="*{phoneNo}" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            <input type="number" th:field="*{phone}" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                           </div>
+                          <div class="input-group mb-3 roles">
+							<div class="form-check" th:each="role: ${roles}" th:classappend="${role.name}">
+							  <input class="form-check-input" type="checkbox" name="role" th:value="${role.name}" >
+							  <label class="form-check-label" for="flexCheckDefault" th:text="${role.name}">
+							  </label>
+							</div>
+							</div>
                           <div class="form-group">
                             <input id="btn-post" type="submit" value="Save" class="btn btn-primary">
                             <div class="submitting"></div>
@@ -78,16 +85,13 @@
                     </form>
                   </div>
                 </div>
-                <div class="col-md-9 col-lg-2"    >
-                  <img id="img-movie" style="height: 100%;"  th:src="${branch.imgURL}" alt="">
-                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <div id="error--login" class="swal-overlay" tabindex="-1"  >
+        <div id="error--login" class="swal-overlay" tabindex="-1"  th:classappend="${error}!=null ? swal-overlay--show-modal: ''">
   <div class="swal-modal" role="dialog" aria-modal="true">
 	  <div class="swal-icon swal-icon--error">
 	    <div class="swal-icon--error__x-mark">
@@ -95,7 +99,7 @@
 	      <span class="swal-icon--error__line swal-icon--error__line--right"></span>
 	    </div>
 	  </div>
-	  <div class="swal-title" >Không được để trống dữ liệu</div>
+	  <div class="swal-title" th:text="${error}!=null ? ${error}:'Không được để trống dữ liệu'"></div>
 	  <div class="swal-footer">
 	  	<div class="swal-button-container">
 	    	<button class="swal-button swal-button--confirm">OK</button>
@@ -106,7 +110,7 @@
   </div>
     </main>
   <script th:inline="javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
 			$("#btn-post").click(function(event){
 				event.preventDefault();
 				var emty=false
@@ -129,7 +133,6 @@
 
     		  });
     });
-    
 	</script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"

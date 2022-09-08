@@ -12,11 +12,11 @@ public class Role {
 	@Override
 	public boolean equals(Object obj) {
 
-		return Objects.equals(name, obj);
+		return Objects.equals(this.name, obj.toString());
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(name);
+		return Objects.hash(this.name);
 	}
     
 }

@@ -52,7 +52,6 @@ public class HomeController {
         model.addAttribute("branches",branches);
         model.addAttribute("showingMovies",showingMovies);
         model.addAttribute("comingMovies",comingMovies);
-        System.out.println(allStartDate.length);
         model.addAttribute("allStartDate",allStartDate);
         return "home";
     }

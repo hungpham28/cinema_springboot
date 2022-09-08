@@ -2,7 +2,6 @@ package com.example.cinema_client.controllers;
 
 import com.example.cinema_client.constants.Api;
 import com.example.cinema_client.models.JwtResponseDTO;
-import com.example.cinema_client.models.MovieDTO;
 import com.example.cinema_client.models.Role;
 import com.example.cinema_client.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -32,19 +32,21 @@ public class LoginController {
     public static String API_REGISTER = Api.baseURL+"/register";
     
     @GetMapping("/login")
-    public String loginPage(HttpServletRequest request,Model model) {
+    public String loginPage(HttpSession session,Model model) {
     	model.addAttribute("user",new User());
-        request.getSession().removeAttribute("jwtResponse");
+        session.removeAttribute("jwtResponse");
+        session.removeAttribute("admin");
         return "login";
     }
     @GetMapping("/register")
-    public String registerPage(HttpServletRequest request,Model model) {
+    public String registerPage(HttpSession session, Model model) {
     	model.addAttribute("user",new User());
-        request.getSession().removeAttribute("jwtResponse");
+        session.removeAttribute("jwtResponse");
+        session.removeAttribute("admin");
         return "register";
     }
     @PostMapping("/login")
-    public String login(Model model, HttpServletRequest request) {
+    public String login(Model model, HttpServletRequest request, HttpSession session) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         User user = new User();
@@ -56,7 +58,7 @@ public class LoginController {
             ResponseEntity<JwtResponseDTO> jwtResponse
                     = restTemplate.exchange(apiLogin, HttpMethod.POST, httpEntity, JwtResponseDTO.class);
             jwt=jwtResponse.getBody();
-            request.getSession().setAttribute("jwtResponse", (JwtResponseDTO) jwtResponse.getBody());
+            session.setAttribute("jwtResponse", (JwtResponseDTO) jwtResponse.getBody());
         }
         catch (HttpClientErrorException ex){
             model.addAttribute("loginError",ex.getResponseBodyAsString());
@@ -67,6 +69,7 @@ public class LoginController {
         }
         for(Role role: jwt.getRoles()) {
         	if(role.equals("ROLE_ADMIN")) {
+        		session.setAttribute("admin", true);
         		return "redirect:/admin";
         	}
         }
@@ -84,7 +87,6 @@ public class LoginController {
             Set<Role> roles = new HashSet<Role>();
             Role roleClient = new Role();
             roleClient.setName("ROLE_CLIENT");
-//            roleClient.setId(1);
             roles.add(roleClient);
             user.setRoles(roles);
             try {
@@ -103,8 +105,9 @@ public class LoginController {
     }
 
     @GetMapping("/sign-out")
-    public String signOut(HttpServletRequest request) {
-        request.getSession().removeAttribute("jwtResponse");
+    public String signOut(HttpSession session) {
+        session.removeAttribute("jwtResponse");
+        session.removeAttribute("admin");
         return "redirect:/";
     }
 }

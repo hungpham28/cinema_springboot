@@ -72,31 +72,6 @@
                     </div>
                 </div>
             </div>
-            <div class="bookMovie">
-                <div class="row">
-                    <div id="movie__dropdown" class="select__item col-md-2 col-xs-6">
-                        <div class="select__form"><select name="movie" id="slct">
-                            </select></div>
-                    </div>
-                    <div id="theater__dropdown" class="select__item col-md-2 col-xs-6">
-                        <div class="select__form"><select name="slct" id="slct">
-                                <option value="DEFAULT" selected="">Chọn rạp</option>
-                            </select></div>
-                    </div>
-                    <div id="chooseday__dropdown" class="select__item col-md-2 col-xs-6">
-                        <div class="select__form"><select name="slct" id="slct">
-                                <option value="DEFAULT" selected="">Chọn ngày</option>
-                            </select></div>
-                    </div>
-                    <div id="showtime__dropdown" class="select__item col-md-2 col-xs-6">
-                        <div class="select__form"><select name="slct" id="slct">
-                                <option value="DEFAULT" selected="">Chọn giờ</option>
-                            </select></div>
-                    </div>
-                    <div class="col-md-4 col-sm-12 select__item button__form"><button class="btn-style-disable">ĐẶT
-                            VÉ</button></div>
-                </div>
-            </div>
         </div>
         <div id="listMovie" class="listMovie">
             <div class="container">
@@ -221,11 +196,11 @@
 								            </div>
 								            <div class="secondary__tabContent col-md-7 col-sm-12">
 								                <div class="tab-content" id="v-pills-tabContent">
-								                    <div th:each="branch : ${branches}" class="tab-pane fade" th:id="'branch'+${branch.id}" role="tabpanel" aria-labelledby="v-pills-home-tab">
+								                    <div th:each="branch : ${branches}" class="tab-pane fade"  
+								                    th:id="'branch'+${branch.id}" role="tabpanel" aria-labelledby="v-pills-home-tab">
 								                        <div class="tab__list" >
 								                            <ul>
-								                            	
-								                                <li class="film__item" th:each="movie: ${branch.movies}" >
+								                                <li class="film__item" th:each="movie: ${branch.movies}" data-length="0">
 								                                	<a class="film__link" data-toggle="collapse" th:href="'#brand'+${branch.id}+'-movie'+${movie.id}" role="button" aria-expanded="false" aria-controls="1322">
 								                                        <div class="row">
 								                                            <div class="film__img col-2"><img th:src="${movie.smallImageURl}" th:alt="${movie.smallImageURl}">
@@ -755,11 +730,20 @@
 				}
 				else{
 					$(this).css("display","");
+					$(this).closest('.film__item').data('length',Number($(this).closest('.film__item').data('length'))+1)
 				}
+			})
+			$('.film__item').each(function(){
+				console.log($(this).data("length"))
+				if($(this).data("length")=='0') $(this).css("display","none");
+				else $(this).css("display","");
 			})
 		}
 		fillterSchedule();
 		$("#select-date").on("change",function(){
+			$('.film__item').each(function(){
+				$(this).data("length",0)
+			})
 			fillterSchedule();
 		})
 		$(".owl-carousel").owlCarousel({

@@ -6,6 +6,8 @@ import com.example.cinema_back_end.dtos.RoomDTO;
 import com.example.cinema_back_end.dtos.ScheduleDTO;
 import com.example.cinema_back_end.entities.Schedule;
 import com.example.cinema_back_end.repositories.IScheduleRepository;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +27,10 @@ public class ScheduleService implements IScheduleService {
     private ModelMapper modelMapper;
     @Override
     public List<String> getAllStartDateSchedule() {
+    	LocalDate date= LocalDate.now();
         return scheduleRepository.getAllStartDateSchedule()
-                .stream().map(localDate -> localDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+                .stream().filter(localDate -> localDate.compareTo(date)>=0)
+                .map(localDate -> localDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
                 .collect(Collectors.toList());
     }
 

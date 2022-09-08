@@ -36,6 +36,13 @@
                                 <div class="d-flex flex-column"><i class="mb-2 fa fa-mobile"></i><span>Phim</span>
                                 </div>
                             </a></li>
+                        <li class="nav-item" th:if="${session.admin}">
+                        	<a aria-current="page" class="nav-link active" th:href="@{/admin}">
+                                <div class="d-flex flex-column"><i class="mb-2 fa fa-mobile"></i>
+                                <span >Quản Lí</span>
+                                </div>
+                            </a>
+                         </li>
                     </ul>
                     <div class="header__login" th:if="${session.jwtResponse != null}">
                         <a class="login__link" aria-haspopup="true" style="cursor: pointer;" th:href="@{/account/profile}">

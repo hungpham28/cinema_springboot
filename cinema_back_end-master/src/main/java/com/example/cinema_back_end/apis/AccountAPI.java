@@ -29,7 +29,6 @@ public class AccountAPI {
     @GetMapping
     private ResponseEntity<User> getProfileUser(@RequestParam Integer userId){
     	User user=userService.findById(userId).get();
-    	user.setPassword("******");
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
     @PostMapping("/update-infor")

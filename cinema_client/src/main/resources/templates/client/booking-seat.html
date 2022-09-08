@@ -238,7 +238,27 @@
   	<div class="swal-footer">
   <div class="swal-button-container">
 
-    <button class="swal-button swal-button--confirm">OK</button>
+    <button  class="swal-button swal-button--confirm">OK</button>
+
+    <div class="swal-button__loader">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+  </div></div></div></div>
+    <div id="error-time" class="swal-overlay" tabindex="-1" >
+  <div class="swal-modal" role="dialog" aria-modal="true"><div class="swal-icon swal-icon--error">
+    <div class="swal-icon--error__x-mark">
+      <span class="swal-icon--error__line swal-icon--error__line--left"></span>
+      <span class="swal-icon--error__line swal-icon--error__line--right"></span>
+    </div>
+  </div>
+  	<div class="swal-title" >Lịch chiếu đã đóng, vui lòng chọn lịch chiếu khác!</div>
+  	<div class="swal-footer">
+  <div class="swal-button-container">
+
+    <button id="notify-error" class="swal-button swal-button--confirm">OK</button>
 
     <div class="swal-button__loader">
       <div></div>
@@ -298,8 +318,12 @@
                     }
                   });
                 //clock time
-                setInterval(function() {
+               var clock= setInterval(function() {
                     $('.time').text(remainingTime());
+                    if(remainingTime()==null){
+              		  clearInterval(clock);
+        			  $("#error-time").addClass("swal-overlay--show-modal")
+                    }
                 }, 1000);
               //submit form booking
             	$("#btn-booking").click(function(){
@@ -353,8 +377,12 @@
                 });
             	//close notify
                 $(".notify").click(function(e){
-                    $(this).removeClass("swal-overlay--show-modal");
+                	if(remainingTime()!=null)
+                		$(this).removeClass("swal-overlay--show-modal");
                 });
+        		$("#notify-error").click(function(){
+        			window.location.href ='/';
+        		})
               });
             function remainingTime() {
             	  const today = new Date();
@@ -366,7 +394,7 @@
 	            	  var s = seconds- h*3600-m*60;
             	  }
             	  else{
-            		  return null
+        			  return null
             	  }
             	  return  h + " giờ " + m + " phút " + s+" giây ";
             	}

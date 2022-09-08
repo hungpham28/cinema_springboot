@@ -1,146 +1,260 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
-
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
-
-    <link href="https://fonts.googleapis.com/css?family=Source+Serif+Pro:400,600&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" th:href="@{/fonts/icomoon/style.css}">
-
-    <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
-
-    <!-- Bootstrap CSS -->
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>SHOP MALL</title>
+      <script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+      <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+      <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700&amp;display=swap" rel="stylesheet">
   <link href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-    <!-- Style -->
-    <link rel="stylesheet" th:href="@{/css/style.css}">
-	<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
-    <title>Sidebar #1</title>
-  </head>
-  <body>
-  <th:block lang="vi" th:include="fragments/admin/navigation :: navigation"></th:block>
-    
-    <main>
-      <div class="site-section">
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-md-9">
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="d-flex post-entry">
-                    <div class="custom-thumbnail">
-                      <img src="images/person_1.jpg" alt="Image" class="img-fluid">
-                    </div>
-                    <div class="post-content">
-                      <h3>How the gut microbes you're born with affect your lifelong health</h3>
-                      <div class="post-meta"><span>Posted:</span> Dec 17, 2019</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="d-flex post-entry">
-                    <div class="custom-thumbnail">
-                      <img src="images/person_2.jpg" alt="Image" class="img-fluid">
-                    </div>
-                    <div class="post-content">
-                      <h3>How the gut microbes you're born with affect your lifelong health</h3>
-                      <div class="post-meta"><span>Posted:</span> Dec 17, 2019</div>
-                    </div>
-                  </div>
-                </div>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 
-                <div class="col-md-6">
-                  <div class="d-flex post-entry">
-                    <div class="custom-thumbnail">
-                      <img src="images/person_3.jpg" alt="Image" class="img-fluid">
-                    </div>
-                    <div class="post-content">
-                      <h3>How the gut microbes you're born with affect your lifelong health</h3>
-                      <div class="post-meta"><span>Posted:</span> Dec 17, 2019</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="d-flex post-entry">
-                    <div class="custom-thumbnail">
-                      <img src="images/person_4.jpg" alt="Image" class="img-fluid">
-                    </div>
-                    <div class="post-content">
-                      <h3>How the gut microbes you're born with affect your lifelong health</h3>
-                      <div class="post-meta"><span>Posted:</span> Dec 17, 2019</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                  <div class="d-flex post-entry">
-                    <div class="custom-thumbnail">
-                      <img src="images/person_1.jpg" alt="Image" class="img-fluid">
-                    </div>
-                    <div class="post-content">
-                      <h3>How the gut microbes you're born with affect your lifelong health</h3>
-                      <div class="post-meta"><span>Posted:</span> Dec 17, 2019</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="d-flex post-entry">
-                    <div class="custom-thumbnail">
-                      <img src="images/person_2.jpg" alt="Image" class="img-fluid">
-                    </div>
-                    <div class="post-content">
-                      <h3>How the gut microbes you're born with affect your lifelong health</h3>
-                      <div class="post-meta"><span>Posted:</span> Dec 17, 2019</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="col-md-6">
-                  <div class="d-flex post-entry">
-                    <div class="custom-thumbnail">
-                      <img src="images/person_3.jpg" alt="Image" class="img-fluid">
-                    </div>
-                    <div class="post-content">
-                      <h3>How the gut microbes you're born with affect your lifelong health</h3>
-                      <div class="post-meta"><span>Posted:</span> Dec 17, 2019</div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="d-flex post-entry">
-                    <div class="custom-thumbnail">
-                      <img src="images/person_4.jpg" alt="Image" class="img-fluid">
-                    </div>
-                    <div class="post-content">
-                      <h3>How the gut microbes you're born with affect your lifelong health</h3>
-                      <div class="post-meta"><span>Posted:</span> Dec 17, 2019</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>  
-    </main>
-	<script type="text/javascript">
-    $(function () {
-    		$(".nav-menu ul li:first-child").addClass("active")
-    });
-	</script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-    crossorigin="anonymous"></script>
-    <script th:src="@{/js/popper.min.js}"></script>
+	<link rel="stylesheet" th:href="@{/css/manage-page.style.css}"/>
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<style type="text/css">tr>th>input{    width: -webkit-fill-available;}
+		table{
+		  margin: 0 auto;
+		  width: 100%;
+		  clear: both;
+		  border-collapse: collapse;
+		  table-layout: fixed;
+		  word-wrap:break-word; 
+		}
+	</style>
+</head>
+<body>
+	<th:block lang="vi" th:include="fragments/admin/navigation :: navigation"></th:block>
+	<main>
+    <div class="container py-5" style="max-width: 100%;">
+        <div class="row py-5">
+          <div class="col-lg-10 mx-auto">
+            <div class="card rounded shadow border-0">
+              <div class="card-body p-5 bg-white rounded">
+              	<a class="btn btn-success" th:href="@{/admin/schedules/add}" style="margin-bottom: 20px;"><i class="fa fa-plus" aria-hidden="true"></i>
+              	<span>ADD SCHEDULE</span> </a>
+                <div class="table-responsive">
+                  <table id="example" style="width:100%" class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th >ID</th>
+                        <th >Phim</th>
+                        <th >Giá Tiền</th>
+                        <th >Lịch Chiếu</th>                      
+                        <th >Tên Chi Nhánh</th>
+                        <th >Phòng</th>
+                        <th >Chức năng</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr th:each="schedule : ${schedules}">
+                      	<td  th:text="${schedule.id}"></td>
+                        <td style="	display:flex; 
+                            		justify-content: space-between;
+    								flex-direction: row-reverse;">
+                        	<span th:text="${schedule.movie.name}"></span> 
+                        	<img th:src="${schedule.movie.smallImageURl}" style="width: 80px;margin-right: 10px "/>
+                        </td>
+                        <td class="number" ><span th:text="${#numbers.formatDecimal(schedule.price, 0, 'COMMA', 0,'POINT')}"></span><span>VND</span></td>
+                        <td>
+                        	<span th:text="${schedule.startDate}"></span>
+                        	<span style="display: block;" th:text="${schedule.startTime}"></span>
+                        </td>
+                        <td  th:text="${schedule.branch.name}"></td>
+                        <td  th:text="${schedule.room.name}"></td>
+                      </tr>
+       			 </tbody>
+    			</table>
+			</div>
+	 			<div class="table-responsive">
+                  <table id="example2" style="width:100%" class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th >ID</th>
+                        <th >Phim</th>
+                        <th >Giá Tiền</th>
+                        <th >Lịch Chiếu</th>                      
+                        <th >Tên Chi Nhánh</th>
+                        <th >Phòng</th>
+                        <th >Chức năng</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr th:each="schedule : ${schedules}">
+                      	<td  th:text="${schedule.id}"></td>
+                        <td style="	display:flex; 
+                            		justify-content: space-between;
+    								flex-direction: row-reverse;">
+                        	<span th:text="${schedule.movie.name}"></span> 
+                        	<img th:src="${schedule.movie.smallImageURl}" style="width: 80px;margin-right: 10px "/>
+                        </td>
+                        <td class="number" ><span th:text="${#numbers.formatDecimal(schedule.price, 0, 'COMMA', 0,'POINT')}"></span><span>VND</span></td>
+                        <td>
+                        	<span th:text="${schedule.startDate}"></span>
+                        	<span style="display: block;" th:text="${schedule.startTime}"></span>
+                        </td>
+                        <td  th:text="${schedule.branch.name}"></td>
+                        <td  th:text="${schedule.room.name}"></td>
+                      </tr>
+       			 </tbody>
+    		</table>
+	</div>
+	</div></div></div></div></div>
+	</main>
     <script th:src="@{/js/main.js}"></script>
-  </body>
+
+<script th:inline="javascript">
+$(function () {
+	$(".nav-menu ul li:first-child").addClass("active")
+});
+    $(document).ready(function () {
+        // Setup - add a text input to each footer cell
+        $('#example thead tr')
+            .clone(true)
+            .addClass('filters')
+            .appendTo('#example thead');
+     
+        var table = $('#example').DataTable({
+        	autoWidth: false,
+            columnDefs: [
+                { width: 80, targets: 0 },
+                { width: 330, targets: 1 },
+                { width: 120, targets: 2 },
+                { width: 120, targets: 3 },
+                { width: 160, targets: 4 },
+                { width: 100, targets: 5 },
+                { width: 80, targets: 6 }
+            ],
+            orderCellsTop: true,
+            fixedHeader: true,
+            initComplete: function () {
+                var api = this.api();
+     
+                // For each column
+                api
+                    .columns()
+                    .eq(0)
+                    .each(function (colIdx) {
+                        // Set the header cell to contain the input element
+                        var cell = $('.filters th').eq(
+                            $(api.column(colIdx).header()).index()
+                        );
+                        var title = $(cell).text();
+                        $(cell).html('<input type="text" placeholder="' + title + '" />');
+     
+                        // On every keypress in this input
+                        $(
+                            'input',
+                            $('.filters th').eq($(api.column(colIdx).header()).index())
+                        )
+                            .off('keyup change')
+                            .on('change', function (e) {
+                                // Get the search value
+                                $(this).attr('title', $(this).val());
+                                var regexr = '({search})'; //$(this).parents('th').find('select').val();
+     
+                                var cursorPosition = this.selectionStart;
+                                // Search the column for that value
+                                api
+                                    .column(colIdx)
+                                    .search(
+                                        this.value != ''
+                                            ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                            : '',
+                                        this.value != '',
+                                        this.value == ''
+                                    )
+                                    .draw();
+                            })
+                            .on('keyup', function (e) {
+                                e.stopPropagation();
+     
+                                $(this).trigger('change');
+                                $(this)
+                                    .focus()[0]
+                                    .setSelectionRange(cursorPosition, cursorPosition);
+                            });
+                    });
+            },
+        });
+      $('#example2 thead tr')
+        .clone(true)
+        .addClass('filters')
+        .appendTo('#example2 thead');
+ 
+    var table2 = $('#example2').DataTable({
+    	autoWidth: false,
+        columnDefs: [
+            { width: 80, targets: 0 },
+            { width: 330, targets: 1 },
+            { width: 120, targets: 2 },
+            { width: 120, targets: 3 },
+            { width: 160, targets: 4 },
+            { width: 100, targets: 5 },
+            { width: 80, targets: 6 }
+        ],
+        orderCellsTop: true,
+        fixedHeader: true,
+        initComplete: function () {
+            var api = this.api();
+ 
+            // For each column
+            api
+                .columns()
+                .eq(0)
+                .each(function (colIdx) {
+                    // Set the header cell to contain the input element
+                    var cell = $('.filters th').eq(
+                        $(api.column(colIdx).header()).index()
+                    );
+                    var title = $(cell).text();
+                    $(cell).html('<input type="text" placeholder="' + title + '" />');
+ 
+                    // On every keypress in this input
+                    $(
+                        'input',
+                        $('.filters th').eq($(api.column(colIdx).header()).index())
+                    )
+                        .off('keyup change')
+                        .on('change', function (e) {
+                            // Get the search value
+                            $(this).attr('title', $(this).val());
+                            var regexr = '({search})'; //$(this).parents('th').find('select').val();
+ 
+                            var cursorPosition = this.selectionStart;
+                            // Search the column for that value
+                            api
+                                .column(colIdx)
+                                .search(
+                                    this.value != ''
+                                        ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                        : '',
+                                    this.value != '',
+                                    this.value == ''
+                                )
+                                .draw();
+                        })
+                        .on('keyup', function (e) {
+                            e.stopPropagation();
+ 
+                            $(this).trigger('change');
+                            $(this)
+                                .focus()[0]
+                                .setSelectionRange(cursorPosition, cursorPosition);
+                        });
+                });
+        },
+    });
+    });
+</script>
+
+</body>
 </html>

@@ -15,6 +15,7 @@
     <link rel="stylesheet" th:href="@{/css/owl.carousel.min.css}">
 
     <!-- Bootstrap CSS -->
+    
     <link th:href="@{/css/main.css}" rel="stylesheet"/>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -22,10 +23,14 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:300,400,700&amp;display=swap" rel="stylesheet">
   <link href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+
+
     <!-- Style -->
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet" th:href="@{/css/form-style.css}">
+      <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 	<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+	<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
     <title>AP Movie</title>
   </head>
   <body>
@@ -125,7 +130,11 @@
                             </div>
                             <input type="text" th:field="*{rated}" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                           </div>
-                          
+                           <div class="input-group mb-3">
+                        	<input id="check-showing" name="checkShowing" type="checkbox" th:checked="${movie.isShowing==1}" 
+                        	data-toggle="toggle" data-onstyle="primary" data-offstyle="secondary"
+                        	data-on="Đang chiếu" data-off="Sắp chiếu">
+							</div>
                           <div class="form-group">
                             <input id="btn-post" type="submit" value="Save" class="btn btn-primary">
                             <div class="submitting"></div>
@@ -161,35 +170,7 @@
   </div>
     </main>
   <script th:inline="javascript">
-    $(function () {
-    		$(".nav-menu ul li:first-child").addClass("active")
-    });
-    function callAPIGetRooms(){
-  	  $.ajax({
-  	      url: "http://localhost:8080/api/admin/rooms?branchId=" + $("#listBranch").find(":selected").val(),
-  	      type: 'POST',
-            headers: {"Authorization": "Bearer "+[[${session.jwtResponse.accessToken}]]},
-            contentType: "application/json; charset=utf-8",
-  	      success: function (data) {
-  	          console.log("data: "+data)
-  	          $("#listRoom").html('<option value="" selected disabled hidden>Select Room</option>');
-  	          data.forEach(room => {
-  	              $("#listRoom").append("<option value=" + '"' + room['id'] + '"' + ">" + room['name'] + "</option>")
-  	          });
-  	      },
-  	      error: function(error){
-  	          alert(error)
-  	      }
-  	  }) 
-    }
     $(document).ready(function() {
-        $("#listMovie").on("change",function(){
-          $("#img-movie").attr("src",$(this).find(':selected').data('url'))
-        })
-         
-		$("#listBranch").on("change",function(){
-				callAPIGetRooms();
-		})
 			$("#btn-post").click(function(event){
 				event.preventDefault();
 				var emty=false

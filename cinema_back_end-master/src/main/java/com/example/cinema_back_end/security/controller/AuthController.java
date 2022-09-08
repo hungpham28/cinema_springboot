@@ -2,11 +2,14 @@ package com.example.cinema_back_end.security.controller;
 
 
 
+import com.example.cinema_back_end.entities.Role;
 import com.example.cinema_back_end.entities.User;
 import com.example.cinema_back_end.security.jwt.JwtResponse;
 import com.example.cinema_back_end.security.jwt.JwtService;
+import com.example.cinema_back_end.security.service.IRoleService;
 import com.example.cinema_back_end.security.service.IUserService;
 
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,9 @@ public class AuthController {
 
     @Autowired
     private IUserService userService;
+    
+    @Autowired
+    private IRoleService roleService;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
@@ -60,6 +66,17 @@ public class AuthController {
                 throw new Exception("Đã tồn tại người dùng, vui lòng chọn tên đăng nhập khác");
             }
             String password = user.getPassword();
+            //get roles in database by name to set for user
+            Set<Role> roles= user.getRoles().stream().map(role ->
+            {
+            	Role existingRole=roleService.findByName(role.getName());
+            	if(existingRole!=null) {
+            		return existingRole;
+            	}else {
+            		return role;
+            	}
+            }).collect(Collectors.toSet());
+            user.setRoles(roles);
             userService.save(user);
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(user.getUsername(),password));
