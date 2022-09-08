@@ -2,11 +2,7 @@ package com.example.cinema_back_end.services;
 
 import com.example.cinema_back_end.dtos.BillDTO;
 import com.example.cinema_back_end.dtos.BookingRequestDTO;
-<<<<<<< HEAD
-import com.example.cinema_back_end.dtos.ScheduleDTO;
-=======
-import com.example.cinema_back_end.dtos.MovieDTO;
->>>>>>> a4285020900edf9a562283aaa89453552cbee550
+
 import com.example.cinema_back_end.entities.Bill;
 import com.example.cinema_back_end.entities.Schedule;
 import com.example.cinema_back_end.entities.Ticket;
@@ -25,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

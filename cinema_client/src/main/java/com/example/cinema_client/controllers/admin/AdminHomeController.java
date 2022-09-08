@@ -48,22 +48,6 @@ public class AdminHomeController {
 		MovieDTO[] movies = responses.getBody();
 		ResponseEntity<BranchDTO[]> response = restTemplate.exchange(API_GET_BRANCHES, HttpMethod.GET, entity, BranchDTO[].class);
 		BranchDTO[] branches = response.getBody();
-//		 String urlTemplate = UriComponentsBuilder.fromHttpUrl(API_SCHEDULES)
-//	                .queryParam("branchId", "{branchId}")
-//	                .encode()
-//	                .toUriString();
-//	        Map<String,Integer> listRequestParam = new HashMap<>();
-//	        listRequestParam.put("branchId", branchId);
-//	        ScheduleDTO[] schedules = null;
-//	        try {
-//	            ResponseEntity<TicketDTO[]> responseTicket = restTemplate.exchange(urlTemplate,HttpMethod.POST,entity,TicketDTO[].class,
-//	            		listRequestParam);
-//	    	    tickets = responseTicket.getBody();
-//			} catch (Exception e) {
-//				System.out.println(e);
-//			}
-//	        model.addAttribute("tickets", tickets);
-		//System.out.println(branches);
 		
 		Long turnover = 0l;
 		Long numTicket = 0l;
