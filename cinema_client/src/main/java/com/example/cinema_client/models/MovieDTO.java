@@ -23,4 +23,6 @@ public class MovieDTO {
     private String rated;
     private Integer isShowing;
     private List<ScheduleDTO> schedules;
+    private Long total;
+    private Long totalTicket;
 }

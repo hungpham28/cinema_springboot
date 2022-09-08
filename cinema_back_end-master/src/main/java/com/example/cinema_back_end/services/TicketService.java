@@ -22,13 +22,19 @@ public class TicketService implements ITicketService{
                 .stream().map(ticket -> modelMapper.map(ticket,TicketDTO.class))
                 .collect(Collectors.toList());
     }
+    @Override
+    public List<TicketDTO> getTicketsByBillId(Integer billId) {
+        return ticketRepository.findTicketsByBill_Id(billId)
+                .stream().map(ticket -> modelMapper.map(ticket,TicketDTO.class))
+                .collect(Collectors.toList());
+    }
 	@Override
 	public List<TicketDTO> findAll() {
 		return ticketRepository.findAll()
                 .stream().map(ticket -> modelMapper.map(ticket,TicketDTO.class))
                 .collect(Collectors.toList());
 	}
-
+	
 	@Override
 	public void remove(Integer id) {
 		ticketRepository.deleteById(id);

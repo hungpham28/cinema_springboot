@@ -4,6 +4,7 @@ import com.example.cinema_back_end.dtos.BranchDTO;
 import com.example.cinema_back_end.dtos.MovieDTO;
 import com.example.cinema_back_end.dtos.RoomDTO;
 import com.example.cinema_back_end.dtos.ScheduleDTO;
+import com.example.cinema_back_end.dtos.TicketDTO;
 import com.example.cinema_back_end.entities.Schedule;
 import com.example.cinema_back_end.repositories.IScheduleRepository;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -18,6 +19,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 
 @Service
 public class ScheduleService implements IScheduleService {
@@ -68,6 +70,13 @@ public class ScheduleService implements IScheduleService {
 	@Override
 	public void remove(Integer id) {
 		scheduleRepository.deleteById(id);	
+	}
+
+	@Override
+	public List<ScheduleDTO> getSchedulesByBranchId(Integer branchId) {
+		return scheduleRepository.findSchedulesByBranch_Id(branchId)
+                .stream().map(schedule -> modelMapper.map(schedule,ScheduleDTO.class))
+                .collect(Collectors.toList());
 	}
 
 

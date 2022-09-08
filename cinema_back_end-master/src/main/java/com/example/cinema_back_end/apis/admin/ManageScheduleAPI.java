@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.cinema_back_end.dtos.ScheduleDTO;
+import com.example.cinema_back_end.dtos.TicketDTO;
 import com.example.cinema_back_end.services.IScheduleService;
 
 
@@ -46,4 +47,8 @@ public class ManageScheduleAPI {
     	scheduleService.remove(scheduleId);
     	return new ResponseEntity<String>("Xóa lịch chiếu thành công!", HttpStatus.OK);
     }
+//    @PostMapping
+//	public ResponseEntity<List<ScheduleDTO>> getSchedulesByBranch(@Param("branchId") Integer branchId) {
+//		return new ResponseEntity<List<ScheduleDTO>>(scheduleService.getSchedulesByBranchId(branchId), HttpStatus.OK);
+//	}
 }

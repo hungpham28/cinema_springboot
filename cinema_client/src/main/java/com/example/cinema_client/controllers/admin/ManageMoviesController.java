@@ -74,6 +74,10 @@ public class ManageMoviesController {
     	}
     	System.out.println(checkShowing);
         HttpEntity<?> entity = new HttpEntity<>(movie,headers);
+<<<<<<< HEAD
+=======
+        //System.out.println(movie);
+>>>>>>> a4285020900edf9a562283aaa89453552cbee550
         try {
         	ResponseEntity<String> response = restTemplate.exchange(API_GET_MOVIES,HttpMethod.PUT, entity, String.class);
         } catch (Exception e) {
