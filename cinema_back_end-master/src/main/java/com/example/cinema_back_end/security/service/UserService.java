@@ -18,7 +18,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
 @Service
 public class UserService implements IUserService {
     @Autowired
@@ -41,7 +40,8 @@ public class UserService implements IUserService {
     @Override
     public User save(User user) {
     	try {
-	        if(findByUsername(user.getUsername()).isPresent()){
+			User existingUser=findByUsername(user.getUsername()).orElse(null);
+	        if(existingUser!=null && user.getId()!=existingUser.getId()){
 	            throw new Exception("Đã tồn tại người dùng, vui lòng chọn tên đăng nhập khác");
 	        }
 	    	user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -113,4 +113,14 @@ public class UserService implements IUserService {
 		long num=userRepository.count();
 		return  num/numEntities+(num%numEntities==0 ? 0:1 );
 	}
+
+
+
+	@Override
+	public User getByResetPasswordToken(String token) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 }

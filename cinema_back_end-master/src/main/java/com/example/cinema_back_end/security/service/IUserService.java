@@ -9,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import java.util.List;
 import java.util.Optional;
 
+import javax.security.auth.login.AccountNotFoundException;
+
 public interface IUserService extends IGeneralService<User>, UserDetailsService {
     Optional<User> findByUsername(String username);
     void updateInfor(Integer userId,User user);
@@ -16,4 +18,6 @@ public interface IUserService extends IGeneralService<User>, UserDetailsService 
 	void saveUserByAdmin(User user, boolean b) throws Exception;
 	List<User> getPageUser(Pageable page);
 	long countPage(Integer numEntities);
+    public User getByResetPasswordToken(String token);
+     
 }
