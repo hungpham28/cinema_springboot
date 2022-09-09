@@ -62,6 +62,7 @@ public class ForgotPasswordController {
 			System.out.println(e);
 			model.addAttribute("status", 0);
 			model.addAttribute("message", e.getMessage());
+			return "/forgot-password";
 		}
 		model.addAttribute("token",token);
 		model.addAttribute("email",email);
